@@ -1,0 +1,54 @@
+{
+  "name": "@gufran/expo-boilerplate",
+  "version": "1.0.0",
+  "description": "🚀 Ultimate Expo React Native Boilerplate - A professionally configured Expo environment with Firebase, Navigation, Azure Upload, and more!",
+  "main": "index.js",
+  "bin": {
+    "create-gufran-expo-app": "./bin/cli.js",
+    "gufran-expo": "./bin/cli.js",
+    "create-expo-gufran": "./bin/cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "chmod +x bin/cli.js"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "boilerplate",
+    "template",
+    "firebase",
+    "typescript",
+    "react-navigation",
+    "azure-storage",
+    "starter-kit",
+    "gufran"
+  ],
+  "author": "Gufran Gaury <your-email@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GufranGaury1887/Boiler_Plat_Expo_-Gufran.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GufranGaury1887/Boiler_Plat_Expo_-Gufran/issues"
+  },
+  "homepage": "https://github.com/GufranGaury1887/Boiler_Plat_Expo_-Gufran#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0",
+    "ora": "^5.4.1",
+    "prompts": "^2.4.2",
+    "validate-npm-package-name": "^5.0.0"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "template",
+    "README.md",
+    "LICENSE"
+  ]
+}

@@ -1,0 +1,19 @@
+# Only include essential files in npm package
+
+# Exclude everything by default
+*
+
+# Include specific files and directories
+!bin/
+!bin/**
+!lib/
+!lib/**
+!README.md
+!LICENSE
+!package.json
+!index.js
+
+# Exclude from included directories
+*.log
+*.test.js
+*.spec.js
