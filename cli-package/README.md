@@ -47,7 +47,7 @@ yarn create @gufran/expo-boilerplate my-awesome-app
 
 ### Interactive Mode
 
-Simply run without a project name to enter interactive mode:
+Simply run without a project name to enter interactive mode (will prompt for project name and bundle ID):
 
 ```bash
 npx @gufran/expo-boilerplate
@@ -65,6 +65,7 @@ npx @gufran/expo-boilerplate [project-name] [options]
 
 | Option | Description |
 |--------|-------------|
+| `-b, --bundle-id <bundleId>` | Bundle identifier (e.g., com.company.appname) |
 | `--skip-install` | Skip automatic dependency installation |
 | `--skip-git` | Skip git initialization |
 | `--npm` | Use npm instead of yarn |
@@ -74,14 +75,20 @@ npx @gufran/expo-boilerplate [project-name] [options]
 ### Examples:
 
 ```bash
+# Create project with custom bundle ID
+npx @gufran/expo-boilerplate my-app -b com.mycompany.myapp
+
 # Create project with npm
 npx @gufran/expo-boilerplate my-app --npm
 
 # Skip installation and git init
 npx @gufran/expo-boilerplate my-app --skip-install --skip-git
 
-# Quick setup
-npx @gufran/expo-boilerplate my-app
+# Full command with all options
+npx @gufran/expo-boilerplate my-app -b com.company.app --npm
+
+# Interactive mode (prompts for name and bundle ID)
+npx @gufran/expo-boilerplate
 ```
 
 ---
@@ -171,9 +178,22 @@ my-app/
 ### 1. Create Your Project
 
 ```bash
-npx @gufran/expo-boilerplate my-app
+# Interactive mode (recommended)
+npx @gufran/expo-boilerplate
+
+# Or specify project name and bundle ID
+npx @gufran/expo-boilerplate my-app -b com.mycompany.myapp
+
 cd my-app
 ```
+
+The CLI will automatically:
+- Create project directory
+- Copy all template files (no git clone needed!)
+- Update `package.json` with your project name
+- Update `app.json` with your project name and bundle IDs
+- Install dependencies (unless --skip-install)
+- Initialize git repository (unless --skip-git)
 
 ### 2. Configure Firebase
 
@@ -197,21 +217,21 @@ ios/ClubYakka/GoogleService-Info.plist
 cd ios && pod install && cd ..
 ```
 
-### 4. Update App Configuration
+### 4. Verify Configuration
 
-Edit `app.json` with your app details:
+The CLI automatically updates `app.json` with your bundle IDs, but you can verify:
 
 ```json
 {
   "expo": {
-    "name": "Your App Name",
-    "slug": "your-app-slug",
+    "name": "my-app",
+    "slug": "my-app",
     "version": "1.0.0",
     "ios": {
-      "bundleIdentifier": "com.yourcompany.yourapp"
+      "bundleIdentifier": "com.mycompany.myapp"
     },
     "android": {
-      "package": "com.yourcompany.yourapp"
+      "package": "com.mycompany.myapp"
     }
   }
 }

@@ -6,8 +6,6 @@ const ora = require('ora');
 const prompts = require('prompts');
 const validateProjectName = require('validate-npm-package-name');
 
-const REPO_URL = 'https://github.com/GufranGaury1887/Boiler_Plat_Expo_-Gufran.git';
-
 /**
  * Execute command with proper error handling
  */
@@ -53,38 +51,116 @@ function validateName(name) {
 }
 
 /**
+ * Generate bundle identifier
+ */
+function generateBundleId(projectName, bundleIdPrefix) {
+  const cleanName = projectName.toLowerCase().replace(/[^a-z0-9]/g, '');
+  return `${bundleIdPrefix}.${cleanName}`;
+}
+
+/**
+ * Copy directory recursively
+ */
+function copyDirectory(src, dest, excludeDirs = []) {
+  if (!fs.existsSync(dest)) {
+    fs.mkdirSync(dest, { recursive: true });
+  }
+
+  const entries = fs.readdirSync(src, { withFileTypes: true });
+
+  for (const entry of entries) {
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
+
+    // Skip excluded directories
+    if (excludeDirs.includes(entry.name)) {
+      continue;
+    }
+
+    if (entry.isDirectory()) {
+      copyDirectory(srcPath, destPath, excludeDirs);
+    } else {
+      fs.copyFileSync(srcPath, destPath);
+    }
+  }
+}
+
+/**
+ * Copy template files and update configurations
+ */
+function copyTemplateFiles(templatePath, projectPath, appName, bundleId) {
+  // Directories to exclude from copying
+  const excludeDirs = [
+    'node_modules',
+    '.git',
+    'cli-package',
+    'build',
+    'ios/build',
+    'android/build',
+    'android/.gradle',
+    '.expo',
+    'dist',
+    'Pods',
+    'ios/Pods',
+    '.idea',
+    'ios/ClubYakka.xcworkspace/xcuserdata',
+    'ios/ClubYakka.xcodeproj/xcuserdata'
+  ];
+
+  // Copy all files except excluded directories
+  copyDirectory(templatePath, projectPath, excludeDirs);
+}
+
+/**
  * Main function to create the Expo app
  */
 async function createExpoApp(projectName, options) {
   let appName = projectName;
+  let bundleId = options.bundleId;
 
-  // Prompt for project name if not provided
-  if (!appName) {
-    const response = await prompts({
-      type: 'text',
-      name: 'projectName',
-      message: 'What is your project name?',
-      initial: 'my-expo-app',
-      validate: (value) => {
-        if (!value) return 'Project name is required';
-        const validation = validateProjectName(value);
-        if (!validation.validForNewPackages) {
-          const errors = [
-            ...(validation.errors || []),
-            ...(validation.warnings || [])
-          ];
-          return errors.join(', ');
+  // Prompt for project name and bundle ID if not provided
+  if (!appName || !bundleId) {
+    const responses = await prompts([
+      {
+        type: 'text',
+        name: 'projectName',
+        message: 'What is your project name?',
+        initial: appName || 'my-expo-app',
+        validate: (value) => {
+          if (!value) return 'Project name is required';
+          const validation = validateProjectName(value);
+          if (!validation.validForNewPackages) {
+            const errors = [
+              ...(validation.errors || []),
+              ...(validation.warnings || [])
+            ];
+            return errors.join(', ');
+          }
+          return true;
         }
-        return true;
+      },
+      {
+        type: 'text',
+        name: 'bundleId',
+        message: 'What is your bundle identifier? (e.g., com.company.appname)',
+        initial: (prev) => bundleId || generateBundleId(prev, 'com.yourcompany'),
+        validate: (value) => {
+          if (!value) return 'Bundle ID is required';
+          if (!/^[a-z][a-z0-9]*(\.[a-z][a-z0-9]*)+$/i.test(value)) {
+            return 'Invalid bundle ID format. Use format: com.company.appname';
+          }
+          return true;
+        }
       }
-    });
+    ]);
 
-    if (!response.projectName) {
+    if (!responses.projectName || !responses.bundleId) {
       console.log(chalk.red('\n❌ Project creation cancelled'));
       process.exit(1);
     }
 
-    appName = response.projectName;
+    appName = responses.projectName;
+    bundleId = responses.bundleId;
   }
 
   // Validate project name
@@ -98,34 +174,36 @@ async function createExpoApp(projectName, options) {
     process.exit(1);
   }
 
-  console.log(chalk.green(`\n✨ Creating a new Expo app: ${chalk.bold(appName)}\n`));
+  console.log(chalk.green(`\n✨ Creating a new Expo app: ${chalk.bold(appName)}`));
+  console.log(chalk.cyan(`📦 Bundle ID: ${chalk.bold(bundleId)}\n`));
 
-  // Check for Git
+  // Check for Node.js
   let spinner = ora('Checking prerequisites...').start();
-  if (!commandExists('git')) {
-    spinner.fail('Git is not installed. Please install Git and try again.');
+  if (!commandExists('node')) {
+    spinner.fail('Node.js is not installed. Please install Node.js and try again.');
     process.exit(1);
   }
   spinner.succeed('Prerequisites check passed');
 
-  // Clone the repository
-  spinner = ora('Cloning boilerplate repository...').start();
+  // Create project directory
+  spinner = ora('Creating project directory...').start();
   try {
-    executeCommand(`git clone --depth 1 ${REPO_URL} "${projectPath}"`, { silent: true });
-    spinner.succeed('Repository cloned successfully');
+    fs.mkdirSync(projectPath, { recursive: true });
+    spinner.succeed('Project directory created');
   } catch (error) {
-    spinner.fail('Failed to clone repository');
+    spinner.fail('Failed to create project directory');
     throw error;
   }
 
-  // Remove .git folder unless skip-git is specified
-  if (!options.skipGit) {
-    spinner = ora('Cleaning up git history...').start();
-    const gitPath = path.join(projectPath, '.git');
-    if (fs.existsSync(gitPath)) {
-      fs.rmSync(gitPath, { recursive: true, force: true });
-    }
-    spinner.succeed('Git history cleaned');
+  // Copy template files from current directory (the boilerplate itself)
+  spinner = ora('Copying template files...').start();
+  try {
+    const templatePath = path.resolve(__dirname, '../../');
+    copyTemplateFiles(templatePath, projectPath, appName, bundleId);
+    spinner.succeed('Template files copied successfully');
+  } catch (error) {
+    spinner.fail('Failed to copy template files');
+    throw error;
   }
 
   // Update package.json
@@ -149,9 +227,22 @@ async function createExpoApp(projectName, options) {
     if (appJson.expo) {
       appJson.expo.name = appName;
       appJson.expo.slug = appName.toLowerCase().replace(/[^a-z0-9-]/g, '-');
+      
+      // Update bundle identifiers
+      if (appJson.expo.ios) {
+        appJson.expo.ios.bundleIdentifier = bundleId;
+      } else {
+        appJson.expo.ios = { bundleIdentifier: bundleId };
+      }
+      
+      if (appJson.expo.android) {
+        appJson.expo.android.package = bundleId;
+      } else {
+        appJson.expo.android = { package: bundleId };
+      }
     }
     fs.writeFileSync(appJsonPath, JSON.stringify(appJson, null, 2));
-    spinner.succeed('app.json updated');
+    spinner.succeed('app.json updated with bundle IDs');
   } else {
     spinner.warn('app.json not found, skipping update');
   }

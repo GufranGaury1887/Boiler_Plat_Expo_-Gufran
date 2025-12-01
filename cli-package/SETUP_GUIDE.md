@@ -61,14 +61,17 @@ npm link
 Create a test project:
 
 ```bash
-# Using the linked command
-create-gufran-expo-app my-test-app
+# Using the linked command with bundle ID
+create-gufran-expo-app my-test-app -b com.test.myapp
 
 # Or with options
 create-gufran-expo-app my-test-app --skip-install
 
-# Interactive mode
+# Interactive mode (will prompt for project name and bundle ID)
 create-gufran-expo-app
+
+# All options together
+create-gufran-expo-app my-test-app -b com.company.app --npm --skip-git
 ```
 
 ### Step 3: Verify the Test Project
@@ -244,11 +247,12 @@ Before publishing, test these scenarios:
 
 ### Basic Tests
 
-- [ ] `npx @gufran/expo-boilerplate my-app` - Default creation
-- [ ] `npx @gufran/expo-boilerplate my-app --npm` - Using npm
+- [ ] `npx @gufran/expo-boilerplate my-app` - Interactive (prompts for bundle ID)
+- [ ] `npx @gufran/expo-boilerplate my-app -b com.test.app` - With bundle ID
+- [ ] `npx @gufran/expo-boilerplate my-app -b com.test.app --npm` - Using npm
 - [ ] `npx @gufran/expo-boilerplate my-app --skip-install` - Skip install
 - [ ] `npx @gufran/expo-boilerplate my-app --skip-git` - Skip git
-- [ ] `npx @gufran/expo-boilerplate` - Interactive mode
+- [ ] `npx @gufran/expo-boilerplate` - Full interactive mode
 
 ### Error Handling
 
@@ -265,8 +269,13 @@ Before publishing, test these scenarios:
 
 ### Created Project Tests
 
-- [ ] `package.json` has correct name
-- [ ] `app.json` is updated correctly
+- [ ] `package.json` has correct project name
+- [ ] `app.json` has correct name and slug
+- [ ] `app.json` has correct iOS bundleIdentifier
+- [ ] `app.json` has correct Android package name
+- [ ] All template files copied correctly
+- [ ] No cli-package directory copied
+- [ ] No node_modules copied
 - [ ] Dependencies install successfully
 - [ ] Project runs: `npm start`
 - [ ] Android build: `npm run android`
@@ -294,13 +303,13 @@ Update everywhere it appears:
 - PUBLISHING.md
 - QUICKSTART.md
 
-### Change Repository URL
+### Change Template Source
 
-Edit `cli-package/lib/createApp.js`:
-
-```javascript
-const REPO_URL = 'https://github.com/YourUsername/YourRepo.git';
-```
+**Note**: The new version no longer clones from Git. Instead, it copies files directly from the boilerplate directory. This means:
+- No internet connection required
+- Faster project creation
+- No git history copied
+- Perfect for offline development
 
 ### Add Custom Options
 

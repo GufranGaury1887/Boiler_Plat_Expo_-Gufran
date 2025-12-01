@@ -19,6 +19,7 @@ program
   .version(packageJson.version)
   .description('Create a new Expo app using Gufran\'s professional boilerplate')
   .argument('[project-name]', 'Name of your new project')
+  .option('-b, --bundle-id <bundleId>', 'Bundle identifier (e.g., com.company.appname)')
   .option('-t, --template <template>', 'Template variant to use', 'default')
   .option('--skip-install', 'Skip dependency installation')
   .option('--skip-git', 'Skip git initialization')

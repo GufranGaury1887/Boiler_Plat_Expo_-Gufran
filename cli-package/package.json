@@ -1,7 +1,7 @@
 {
   "name": "@gufran/expo-boilerplate",
-  "version": "1.0.0",
-  "description": "🚀 Ultimate Expo React Native Boilerplate - A professionally configured Expo environment with Firebase, Navigation, Azure Upload, and more!",
+  "version": "2.0.0",
+  "description": "🚀 Ultimate Expo React Native Boilerplate - Create production-ready Expo apps instantly with Firebase, Navigation, TypeScript, and more. No git clone needed, works offline!",
   "main": "index.js",
   "bin": {
     "create-gufran-expo-app": "./bin/cli.js",
