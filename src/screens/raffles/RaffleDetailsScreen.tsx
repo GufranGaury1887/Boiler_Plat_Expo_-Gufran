@@ -173,20 +173,6 @@ export const RaffleDetailsScreen: React.FC<RaffleDetailsScreenProps> = ({ naviga
                             <Text style={styles.dateRange}>End Date: {raffleData.purchaseEndDate}</Text>
 
                             {/* Buy Tickets Button */}
-                            <Button
-                                title="Buy"
-                                navigation.navigate('BuyRaffleTickets', {
-                                    selectedClub,
-                                    selectedMember,
-                                    raffleId: raffleData.raffleId,
-                                    raffleTitle: raffleData.raffleTitle,
-                                    ticketOptions: raffleData.ticketOptions || [],
-                                })
-                                variant='primary'
-                                size='small'
-                                style={{ marginBottom: moderateScale(16) }}
-                                textStyle={{ fontFamily: Fonts.outfitBold, fontSize: moderateScale(16), color: theme.colors.white }}
-                            />
 
                             {/* Prize Pool */}
                             <View style={{ backgroundColor: theme.colors.lightLavenderGray, alignItems: 'center', paddingVertical: moderateScale(20), paddingHorizontal: moderateScale(10), borderRadius: moderateScale(10), marginBottom: moderateScale(20) }}>

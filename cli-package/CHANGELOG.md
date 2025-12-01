@@ -22,7 +22,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - TypeScript configuration
 - Push notifications with Notifee
 - Image picker and camera integration
-- Square In-App Payments
 - Pre-built screens and components
 - Comprehensive documentation
 

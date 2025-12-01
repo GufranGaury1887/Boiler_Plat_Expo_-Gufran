@@ -15,7 +15,6 @@ This boilerplate provides a complete, production-ready setup with enterprise-gra
 - 🔥 **Firebase Integration** - Authentication, Push Notifications, Analytics
 - 🎨 **Professional UI** - Pre-built components and screens
 - 🗂️ **Clean Architecture** - Organized folder structure that scales
-- 💳 **Payment Ready** - Square In-App Payments integrated
 - ☁️ **Cloud Storage** - Azure Blob Storage for file uploads
 - 🔐 **Authentication Flow** - Complete auth screens and navigation
 - 📱 **Native Features** - Camera, Image Picker, Permissions
@@ -118,10 +117,6 @@ npx @gufran/expo-boilerplate my-app
 - Reanimated animations
 - Keyboard-aware scrolling
 
-### 💳 Payment Integration
-
-- Square In-App Payments
-- Ready-to-use payment components
 
 ### ☁️ Cloud Services
 

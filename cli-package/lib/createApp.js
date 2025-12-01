@@ -220,7 +220,6 @@ async function createExpoApp(projectName, options) {
   console.log(chalk.gray('   ✅ TanStack Query for API Management'));
   console.log(chalk.gray('   ✅ TypeScript Configuration'));
   console.log(chalk.gray('   ✅ Zustand State Management'));
-  console.log(chalk.gray('   ✅ Square In-App Payments'));
   console.log(chalk.gray('   ✅ Image Picker & Camera Integration'));
   console.log(chalk.gray('   ✅ Push Notifications with Notifee\n'));
 

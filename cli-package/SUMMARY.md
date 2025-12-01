@@ -167,9 +167,6 @@ When users run your CLI, they get a complete Expo project with:
 - Permissions handling
 - Background upload
 
-### 💳 Payments
-- Square In-App Payments
-- Payment components
 
 ### ☁️ Cloud Services
 - Azure Blob Storage

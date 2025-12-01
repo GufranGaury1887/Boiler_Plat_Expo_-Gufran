@@ -311,7 +311,6 @@ When developers use your CLI, they get a complete project with:
 - ✅ Reanimated
 
 ### 💳 Integrations
-- ✅ Square In-App Payments
 - ✅ Azure Blob Storage
 - ✅ Background upload
 - ✅ SignalR (real-time)
