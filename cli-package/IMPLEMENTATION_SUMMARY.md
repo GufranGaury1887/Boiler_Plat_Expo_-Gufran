@@ -93,7 +93,7 @@ This will prompt you for:
 
 ### Option 2: Command Line
 ```bash
-npx @gufran/expo-boilerplate MyApp -b com.mycompany.myapp
+npx @gufran/expo-boilerplate MyApp -b com.myapp
 ```
 
 ### Option 3: Project Name Only
@@ -218,9 +218,9 @@ cat app.json  # Verify bundle IDs
    npm view @gufran/expo-boilerplate
    ```
 
-6. **Test Published Version**:
+### Test Published Version**:
    ```bash
-   npx @gufran/expo-boilerplate test-published-app -b com.test.published
+   npx @gufran/expo-boilerplate test-published-app -b com.myapp
    ```
 
 ---
@@ -229,27 +229,27 @@ cat app.json  # Verify bundle IDs
 
 ### Basic Usage
 ```bash
-npx @gufran/expo-boilerplate MyApp -b com.company.myapp
+npx @gufran/expo-boilerplate MyApp -b com.myapp
 ```
 
 ### With npm
 ```bash
-npx @gufran/expo-boilerplate MyApp -b com.company.myapp --npm
+npx @gufran/expo-boilerplate MyApp -b com.myapp --npm
 ```
 
 ### Skip Installation
 ```bash
-npx @gufran/expo-boilerplate MyApp -b com.company.myapp --skip-install
+npx @gufran/expo-boilerplate MyApp -b com.myapp --skip-install
 ```
 
 ### Skip Git
 ```bash
-npx @gufran/expo-boilerplate MyApp -b com.company.myapp --skip-git
+npx @gufran/expo-boilerplate MyApp -b com.myapp --skip-git
 ```
 
 ### All Options
 ```bash
-npx @gufran/expo-boilerplate MyApp -b com.company.myapp --npm --skip-git
+npx @gufran/expo-boilerplate MyApp -b com.myapp --npm --skip-git
 ```
 
 ---
@@ -277,7 +277,7 @@ After creating a project, verify:
 **Solution**: Ensure you're running from published npm package or properly linked local CLI.
 
 ### "Invalid bundle ID format"
-**Solution**: Use format `com.company.appname` (lowercase preferred).
+**Solution**: Use format `com.myapp` (lowercase preferred).
 
 ### "Project directory already exists"
 **Solution**: Choose different name or remove existing directory.

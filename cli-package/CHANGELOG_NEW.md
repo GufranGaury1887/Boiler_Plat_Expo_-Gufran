@@ -15,7 +15,7 @@
 
 #### 2. **Bundle ID Configuration** 📱
 - **New Feature**: Specify bundle identifier during project creation
-- **Usage**: `npx @gufran/expo-boilerplate my-app -b com.company.app`
+- **Usage**: `npx @gufran/expo-boilerplate my-app -b com.myapp`
 - **Interactive**: Prompts for bundle ID if not provided
 - **Automatic**: Updates both iOS and Android bundle IDs in `app.json`
 
@@ -58,14 +58,14 @@ npx @gufran/expo-boilerplate my-app -b com.mycompany.myapp
 
 ### Bundle ID Option
 ```bash
--b, --bundle-id <bundleId>    Bundle identifier (e.g., com.company.appname)
+-b, --bundle-id <bundleId>    Bundle identifier (e.g., com.myapp)
 ```
 
 ### Usage Examples
 
 #### 1. Full Command Line
 ```bash
-npx @gufran/expo-boilerplate MyAwesomeApp -b com.mycompany.awesome
+npx @gufran/expo-boilerplate MyAwesomeApp -b com.myapp
 ```
 
 #### 2. Interactive Mode (Recommended)
@@ -78,7 +78,7 @@ npx @gufran/expo-boilerplate
 
 #### 3. With Additional Options
 ```bash
-npx @gufran/expo-boilerplate MyApp -b com.company.myapp --npm --skip-git
+npx @gufran/expo-boilerplate MyApp -b com.myapp --npm --skip-git
 ```
 
 #### 4. Project Name Only (Will Prompt for Bundle ID)
@@ -138,7 +138,7 @@ The new implementation:
 The CLI validates bundle IDs to ensure they follow the correct format:
 - Must start with a letter
 - Can contain letters, numbers, and dots
-- Must have at least one dot (e.g., `com.company.app`)
+- Must have at least one dot (e.g., `com.myapp`)
 - Case-insensitive validation
 - Provides helpful error messages
 
@@ -221,7 +221,7 @@ Planned features for future versions:
 
 ### Issue: "Invalid bundle ID format"
 
-**Solution**: Use format `com.company.appname` (lowercase letters, numbers, and dots only).
+**Solution**: Use format `com.myapp` (lowercase letters, numbers, and dots only).
 
 ### Issue: "Project directory already exists"
 

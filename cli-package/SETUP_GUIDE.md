@@ -71,7 +71,7 @@ create-gufran-expo-app my-test-app --skip-install
 create-gufran-expo-app
 
 # All options together
-create-gufran-expo-app my-test-app -b com.company.app --npm --skip-git
+create-gufran-expo-app my-test-app -b com.myapp --npm --skip-git
 ```
 
 ### Step 3: Verify the Test Project

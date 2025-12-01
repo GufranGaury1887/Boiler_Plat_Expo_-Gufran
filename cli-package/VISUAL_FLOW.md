@@ -5,7 +5,7 @@
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                    USER RUNS COMMAND                            │
-│  npx @gufran/expo-boilerplate my-app -b com.company.app       │
+│  npx @gufran/expo-boilerplate my-app -b com.myapp             │
 └────────────────────┬────────────────────────────────────────────┘
                      │
                      ▼

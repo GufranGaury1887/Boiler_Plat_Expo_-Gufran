@@ -9,7 +9,7 @@ npx @gufran/expo-boilerplate
 
 ### With Options
 ```bash
-npx @gufran/expo-boilerplate MyApp -b com.company.myapp
+npx @gufran/expo-boilerplate MyApp -b com.myapp
 ```
 
 ---
@@ -18,7 +18,7 @@ npx @gufran/expo-boilerplate MyApp -b com.company.myapp
 
 | Option | Description | Example |
 |--------|-------------|---------|
-| `-b, --bundle-id` | Set bundle identifier | `-b com.company.app` |
+| `-b, --bundle-id` | Set bundle identifier | `-b com.myapp` |
 | `--npm` | Use npm instead of yarn | `--npm` |
 | `--skip-install` | Skip dependency installation | `--skip-install` |
 | `--skip-git` | Skip git initialization | `--skip-git` |
@@ -38,7 +38,7 @@ npm link
 
 ### Test
 ```bash
-create-gufran-expo-app TestApp -b com.test.app
+create-gufran-expo-app TestApp -b com.myapp
 ```
 
 ### Automated Test
@@ -112,8 +112,8 @@ cd ios && pod install && cd ..
 ## Bundle ID Format
 
 ### Valid Examples:
-- `com.company.app`
-- `com.mycompany.myapp`
+- `com.myapp`
+- `com.mycompany.app`
 - `io.github.username`
 
 ### Invalid Examples:
@@ -162,7 +162,7 @@ cd ios && pod install && cd ..
 **Fix**: Run `npm link` again in cli-package directory
 
 ### Issue: Invalid bundle ID
-**Fix**: Use format `com.company.appname`
+**Fix**: Use format `com.myapp`
 
 ---
 

@@ -65,7 +65,7 @@ npx @gufran/expo-boilerplate [project-name] [options]
 
 | Option | Description |
 |--------|-------------|
-| `-b, --bundle-id <bundleId>` | Bundle identifier (e.g., com.company.appname) |
+| `-b, --bundle-id <bundleId>` | Bundle identifier (e.g., com.myapp) |
 | `--skip-install` | Skip automatic dependency installation |
 | `--skip-git` | Skip git initialization |
 | `--npm` | Use npm instead of yarn |
@@ -76,7 +76,7 @@ npx @gufran/expo-boilerplate [project-name] [options]
 
 ```bash
 # Create project with custom bundle ID
-npx @gufran/expo-boilerplate my-app -b com.mycompany.myapp
+npx @gufran/expo-boilerplate my-app -b com.myapp
 
 # Create project with npm
 npx @gufran/expo-boilerplate my-app --npm
@@ -85,7 +85,7 @@ npx @gufran/expo-boilerplate my-app --npm
 npx @gufran/expo-boilerplate my-app --skip-install --skip-git
 
 # Full command with all options
-npx @gufran/expo-boilerplate my-app -b com.company.app --npm
+npx @gufran/expo-boilerplate my-app -b com.myapp --npm
 
 # Interactive mode (prompts for name and bundle ID)
 npx @gufran/expo-boilerplate
@@ -182,7 +182,7 @@ my-app/
 npx @gufran/expo-boilerplate
 
 # Or specify project name and bundle ID
-npx @gufran/expo-boilerplate my-app -b com.mycompany.myapp
+npx @gufran/expo-boilerplate my-app -b com.myapp
 
 cd my-app
 ```
@@ -228,10 +228,10 @@ The CLI automatically updates `app.json` with your bundle IDs, but you can verif
     "slug": "my-app",
     "version": "1.0.0",
     "ios": {
-      "bundleIdentifier": "com.mycompany.myapp"
+      "bundleIdentifier": "com.myapp"
     },
     "android": {
-      "package": "com.mycompany.myapp"
+      "package": "com.myapp"
     }
   }
 }
