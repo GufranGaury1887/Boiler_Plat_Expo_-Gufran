@@ -143,7 +143,7 @@ async function createExpoApp(projectName, options) {
         type: 'text',
         name: 'bundleId',
         message: 'What is your bundle identifier? (e.g., com.company.appname)',
-        initial: (prev) => bundleId || generateBundleId(prev, 'com.yourcompany'),
+        initial: (prev) => bundleId || generateBundleId(prev, 'com'),
         validate: (value) => {
           if (!value) return 'Bundle ID is required';
           if (!/^[a-z][a-z0-9]*(\.[a-z][a-z0-9]*)+$/i.test(value)) {
