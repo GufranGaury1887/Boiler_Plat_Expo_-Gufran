@@ -175,16 +175,13 @@ export const RaffleDetailsScreen: React.FC<RaffleDetailsScreenProps> = ({ naviga
                             {/* Buy Tickets Button */}
                             <Button
                                 title="Buy"
-                                onPress={() => navigation.navigate('BuyRaffleTickets', {
+                                navigation.navigate('BuyRaffleTickets', {
                                     selectedClub,
                                     selectedMember,
                                     raffleId: raffleData.raffleId,
                                     raffleTitle: raffleData.raffleTitle,
                                     ticketOptions: raffleData.ticketOptions || [],
-                                    squareApplicationId: raffleData.squareApplicationId,
-                                    squareSellerLocationId: raffleData.squareSellerLocationId,
-                                    squareCurrency: raffleData.squareCurrency,
-                                })}
+                                })
                                 variant='primary'
                                 size='small'
                                 style={{ marginBottom: moderateScale(16) }}

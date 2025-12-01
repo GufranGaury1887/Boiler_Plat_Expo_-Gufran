@@ -560,9 +560,6 @@ export interface RaffleDetailsData {
   latitude: number;
   longitude: number;
   locationAddress: string;
-  squareApplicationId: string;
-  squareSellerLocationId: string;
-  squareCurrency: string;
   pricePools: RafflePrizePool[];
   ticketOptions: RaffleTicketOption[];
 }

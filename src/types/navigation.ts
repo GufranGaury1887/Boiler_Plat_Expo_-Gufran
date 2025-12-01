@@ -95,9 +95,6 @@ export type MainStackParamList = {
       totalAmount: number;
       perTicketAmount: number;
     }>;
-    squareApplicationId?: string;
-    squareSellerLocationId?: string;
-    squareCurrency?: string;
   };
   VolunteerOpportunitiesScreen:{
     selectedClub?: any;

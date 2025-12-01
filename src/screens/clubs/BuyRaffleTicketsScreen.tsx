@@ -19,11 +19,17 @@ import { moderateScale } from '@utils/scaling';
 import { Fonts } from '@constants/Fonts';
 import SVG from '@assets/icons';
 import { MainStackParamList } from '@navigation';
-import PaymentService, { PaymentRequest } from '@services/PaymentService';
-import { formatCurrency } from '@config/square.config';
 import { useVerifyReferralCode } from '@services/mainServices';
 import { getApiErrorInfo } from '@services';
 import { TextInput } from '@components/common';
+
+// Helper function to format currency
+const formatCurrency = (amount: number): string => {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    }).format(amount);
+};
 
 type BuyRaffleTicketsScreenProps = NativeStackScreenProps<MainStackParamList, 'BuyRaffleTickets'>;
 
@@ -43,9 +49,6 @@ export const BuyRaffleTicketsScreen: React.FC<BuyRaffleTicketsScreenProps> = ({ 
         raffleId,
         raffleTitle,
         ticketOptions,
-        squareApplicationId,
-        squareSellerLocationId,
-        squareCurrency
     } = route.params;
 
     const [selectedTicket, setSelectedTicket] = useState<TicketOption | null>(null);
@@ -57,26 +60,11 @@ export const BuyRaffleTicketsScreen: React.FC<BuyRaffleTicketsScreenProps> = ({ 
     const verifyReferralCodeMutation = useVerifyReferralCode();
 
     useEffect(() => {
-        initializePaymentService();
         // Set first ticket as default selection
         if (ticketOptions && ticketOptions.length > 0) {
             setSelectedTicket(ticketOptions[0]);
         }
     }, []);
-
-    const initializePaymentService = async () => {
-        if (!squareApplicationId) {
-            console.warn('[BuyRaffleTicketsScreen] Square not configured');
-            return;
-        }
-
-        try {
-            await PaymentService.initialize(squareApplicationId);
-            console.log('[BuyRaffleTicketsScreen] Payment service initialized');
-        } catch (error) {
-            console.error('[BuyRaffleTicketsScreen] Failed to initialize payment service:', error);
-        }
-    };
 
     const handleSelectTicket = (ticket: TicketOption) => {
         setSelectedTicket(ticket);
@@ -90,14 +78,16 @@ export const BuyRaffleTicketsScreen: React.FC<BuyRaffleTicketsScreenProps> = ({ 
             return;
         }
 
-        if (!squareApplicationId) {
-            Alert.alert(
-                'Configuration Required',
-                'Square Payment SDK is not configured. Please check your raffle configuration.',
-                [{ text: 'OK' }]
-            );
-            return;
-        }
+        Alert.alert(
+            'Payment Integration Required',
+            'Payment processing functionality needs to be implemented. Please integrate your preferred payment gateway.',
+            [{ text: 'OK' }]
+        );
+        
+        /* 
+        // TODO: Implement payment processing logic here
+        // Example implementation structure:
+        
         setIsProcessing(true);
 
         try {
@@ -124,67 +114,41 @@ export const BuyRaffleTicketsScreen: React.FC<BuyRaffleTicketsScreenProps> = ({ 
                 }
             }
 
-            const paymentRequest: PaymentRequest = {
-                amount: selectedTicket.totalAmount,
-                clubId: selectedClub?.id || 7,
-                locationId: squareSellerLocationId, // Use dynamic or fallback
-                currency: squareCurrency,
-                memberId: selectedMember?.id || 0,
-                metadata: {
-                    orderTypeId: 1, // Static value for raffle tickets
-                    id: selectedTicket?.id, // Ticket ID
-                    referralCode: referralCode || "", // Referral code from input
-                }
-            };
+            // Process payment with your payment gateway
+            // const paymentResult = await yourPaymentService.processPayment({
+            //     amount: selectedTicket.totalAmount,
+            //     ticketInfo: selectedTicket,
+            //     referralCode: referralCode
+            // });
 
-            console.log('[BuyRaffleTicketsScreen] Starting payment flow:', paymentRequest);
-            console.log('[BuyRaffleTicketsScreen] Referral code:', referralCode);
-
-            // Start payment flow with buyer verification
-            const result = await PaymentService.makePayment(paymentRequest);
-
-            // Keep loading state active while processing result
-            if (result.success) {
-                // Payment successful
-                Alert.alert(
-                    result.message,
-                    `You've purchased ${selectedTicket.ticketCount} raffle ticket${selectedTicket.ticketCount > 1 ? 's' : ''} for ${raffleTitle}!\n\nGood luck! 🍀`,
-                    [
-                        {
-                            text: 'OK',
-                            onPress: () => {
-                                // Navigate back to ClubDetails page (2 screens back: BuyRaffleTickets -> RaffleDetails -> ClubDetails)
-                                navigation.navigate('ClubDetails', {
-                                    selectedClub,
-                                    selectedMember
-                                }, { merge: true, pop: true });
-                            },
-                        },
-                    ]
-                );
-            } else {
-                // Payment failed
-                throw new Error(result.error || 'Payment failed');
-            }
+            // if (paymentResult.success) {
+            //     Alert.alert(
+            //         'Purchase Successful',
+            //         `You've purchased ${selectedTicket.ticketCount} raffle ticket${selectedTicket.ticketCount > 1 ? 's' : ''} for ${raffleTitle}!\n\nGood luck! 🍀`,
+            //         [
+            //             {
+            //                 text: 'OK',
+            //                 onPress: () => {
+            //                     navigation.navigate('ClubDetails', {
+            //                         selectedClub,
+            //                         selectedMember
+            //                     });
+            //                 },
+            //             },
+            //         ]
+            //     );
+            // }
         } catch (error: any) {
             console.error('[BuyRaffleTicketsScreen] Payment error:', error);
-
-            // Handle user cancellation gracefully
-            if (error?.message?.includes('cancelled')) {
-                console.log('[BuyRaffleTicketsScreen] Payment cancelled by user');
-                return;
-            }
-
-            // Show error alert
             Alert.alert(
                 'Payment Failed',
                 error?.message || 'Unable to process payment. Please try again.',
                 [{ text: 'OK' }]
             );
         } finally {
-            console.log('[BuyRaffleTicketsScreen] Setting isProcessing to FALSE');
             setIsProcessing(false);
         }
+        */
     };
 
     const renderTicketOption = ({ item }: { item: TicketOption }) => {
@@ -270,7 +234,7 @@ export const BuyRaffleTicketsScreen: React.FC<BuyRaffleTicketsScreenProps> = ({ 
             </TouchableOpacity>
 
             <View style={styles.paymentMethodsContainer}>
-                <Text style={styles.paymentMethodsText}>💳 Secure Payment with Square</Text>
+                <Text style={styles.paymentMethodsText}>💳 Payment Gateway Not Configured</Text>
             </View>
         </View>
     );
@@ -371,9 +335,7 @@ export const BuyRaffleTicketsScreen: React.FC<BuyRaffleTicketsScreenProps> = ({ 
                                     )}
                                 </TouchableOpacity>
 
-                                <View style={styles.paymentMethodsContainer}>
-                                    <Text style={styles.paymentMethodsText}>💳 Secure Payment with Square</Text>
-                                </View>
+
                             </View>
                         </View>
                     </KeyboardAwareScrollView>
