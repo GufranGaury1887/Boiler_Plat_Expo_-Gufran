@@ -1,155 +1,349 @@
-# Square Payment Integration - React Native Expo
+# 🚀 React Native Expo Boilerplate
 
-A complete implementation of Square In-App Payments SDK in an Expo React Native project with sandbox testing support.
+A production-ready, feature-rich React Native Expo boilerplate with TypeScript, state management, navigation, and comprehensive utilities.
 
-## 🚀 Quick Start
+## ✨ Features
 
-### 1. Get Your Square Application ID
+### Core Technologies
+- ⚡ **Expo SDK 54** - Latest Expo framework with new architecture enabled
+- 🎯 **React 19** & **React Native 0.81** - Latest React ecosystem
+- 📘 **TypeScript** - Full type safety
+- 🎨 **Custom Fonts** - Outfit font family pre-configured
 
-1. Visit [Square Developer Dashboard](https://developer.squareup.com/apps)
-2. Create a new application or select existing one
-3. Copy your **Sandbox Application ID** from the Credentials page
+### State Management & Data Fetching
+- 🗄️ **Zustand** - Lightweight state management
+- 🔄 **TanStack Query (React Query)** - Server state management
+- 💾 **MMKV** - Fast, efficient key-value storage
+- 🔐 **Secure Storage** - Authentication and user data persistence
 
-### 2. Configure the App
+### Navigation
+- 🧭 **React Navigation v7** - Native stack navigation
+- 📱 **Safe Area Context** - Proper screen insets handling
+- 🔄 **Stack-based Architecture**:
+  - AuthStack (Login, Register, etc.)
+  - MainStack (App screens)
+  - MiddleStack (Intermediate flows)
 
-Edit `config/square.config.ts`:
+### Backend Integration
+- 🌐 **Axios** - HTTP client with interceptors
+- 🔌 **SignalR** - Real-time communication
+- 📡 **Network Info** - Online/offline detection
+- 🐌 **Slow Connection Detection** - User-friendly network warnings
+
+### Firebase Integration
+- 🔥 **Firebase Cloud Messaging** - Push notifications
+- 📲 **Notifee** - Local & remote notification handling
+- 🔔 **Custom Notification Manager** - Centralized notification logic
+
+### UI Components & Utilities
+- 🎨 **Custom Component Library**:
+  - Buttons, TextInputs, Icons
+  - Image Picker with Azure Upload
+  - OTP Input
+  - Toast Messages
+  - Loading States & Modals
+  - Club & Team Cards
+- 📐 **Responsive Scaling** - Device-independent sizing
+- ⌨️ **Keyboard Controller** - Smart keyboard handling
+- 👆 **Gesture Handler** - Smooth touch interactions
+- 🖼️ **Image Zoom** - Built-in image zoom functionality
+
+### Developer Experience
+- 🐛 **Reactotron** - Debugging and development tools
+- 🔍 **Sentry** - Error tracking and monitoring
+- 🎯 **Path Aliases** - Clean imports with `@` prefixes
+- 🔧 **Patch Package** - Custom package modifications
+- 📝 **Comprehensive Scripts** - Build, run, and maintenance commands
+
+### Additional Features
+- 📷 **Camera & Gallery Access** - Image picker with permissions
+- 💬 **Gifted Chat** - Pre-integrated chat functionality
+- 📅 **Date Picker** - Custom date selection
+- 🎨 **SVG Support** - SVG icons and images
+- 📄 **HTML Rendering** - Render HTML content
+- 🌐 **Multi-platform** - iOS, Android support
+
+## 📁 Project Structure
+
+```
+├── android/                    # Android native code
+├── ios/                       # iOS native code
+├── src/
+│   ├── assets/               # Images, fonts, icons
+│   │   ├── fonts/           # Outfit font family
+│   │   ├── icons/           # SVG icons
+│   │   └── images/          # App images
+│   ├── components/
+│   │   └── common/          # Reusable UI components
+│   │       ├── Button.tsx
+│   │       ├── TextInput.tsx
+│   │       ├── ImagePicker.tsx
+│   │       ├── AppLoader.tsx
+│   │       ├── ToastConfig.tsx
+│   │       └── ... (20+ components)
+│   ├── config/              # App configuration
+│   ├── constants/           # Constants & fonts
+│   ├── contexts/            # React contexts
+│   ├── hooks/              # Custom hooks
+│   │   ├── useImageUpload.ts
+│   │   └── index.ts
+│   ├── navigation/         # Navigation setup
+│   │   ├── RootNavigator.tsx
+│   │   ├── AuthStack.tsx
+│   │   ├── MainStack.tsx
+│   │   └── MiddleStack.tsx
+│   ├── providers/          # React providers
+│   │   └── QueryProvider.tsx
+│   ├── screens/           # App screens
+│   ├── services/          # API & business logic
+│   │   ├── api.ts
+│   │   ├── authService.ts
+│   │   └── mainServices.ts
+│   ├── stores/           # Zustand stores
+│   │   └── authStore.ts
+│   ├── types/           # TypeScript types
+│   └── utils/          # Utility functions
+│       ├── scaling.ts
+│       ├── storage.ts
+│       ├── permissions.ts
+│       ├── validation.ts
+│       ├── imagePicker.ts
+│       ├── AzureUploaderService.ts
+│       └── NotificationManager.ts
+├── App.tsx             # App entry point
+├── app.json           # Expo configuration
+├── package.json       # Dependencies
+└── tsconfig.json     # TypeScript config
+```
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
+- Expo CLI
+- Xcode (for iOS development)
+- Android Studio (for Android development)
+
+### Installation
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/GufranGaury1887/Boiler_Plat_Expo_-Gufran.git
+cd Boiler_Plat_Expo_-Gufran
+```
+
+2. **Install dependencies**
+```bash
+npm install
+```
+
+3. **Install iOS Pods** (iOS only)
+```bash
+npm run pod
+```
+
+4. **Configure Firebase**
+   - Add your `google-services.json` to `FirebaseFiles/` (Android)
+   - Add your `GoogleService-Info.plist` to `FirebaseFiles/` (iOS)
+
+5. **Configure Sentry** (Optional)
+   - Update `SENTRY_SESSION_ID` in `src/constants/Constants.ts`
+
+### Running the App
+
+```bash
+# Start Expo dev server
+npm start
+
+# Run on iOS
+npm run ios
+
+# Run on Android
+npm run android
+
+# Clear cache and restart
+npm run clear
+```
+
+## 🔧 Available Scripts
+
+```bash
+npm start          # Start Expo dev server
+npm run ios        # Run on iOS simulator
+npm run android    # Run on Android emulator
+npm run web        # Run in web browser
+npm run pod        # Install iOS pods
+npm run clear      # Clear cache and restart
+npm run clean      # Clean Android build
+npm run ar         # Build Android release APK
+npm run adb-install # Install release APK on device
+```
+
+## 🎯 Path Aliases
+
+The project uses TypeScript path aliases for cleaner imports:
 
 ```typescript
-export const SQUARE_CONFIG = {
-  applicationId: 'YOUR_SANDBOX_APPLICATION_ID_HERE', // Replace this!
-  environment: 'SANDBOX',
-  currencyCode: 'USD',
-  countryCode: 'US',
-};
+import { Button } from '@components/common';
+import { useAuthStore } from '@stores';
+import { api } from '@services';
+import { Colors } from '@constants';
+import { moderateScale } from '@utils/scaling';
+import SVG from '@assets/icons';
 ```
 
-### 3. Add iOS Build Script (Required for iOS)
+## 🔐 Authentication Flow
 
-Open `ios/square.xcworkspace` in Xcode:
-1. Select your app target
-2. Go to **Build Phases** tab
-3. Click **+** → **New Run Script Phase**
-4. Add this script:
+The boilerplate includes a complete authentication system:
 
+1. **Auth Store** (`authStore.ts`) - Manages user state
+2. **Storage Service** - Persists auth tokens securely
+3. **Auto-login** - Restores session on app launch
+4. **API Interceptors** - Automatic token injection
+5. **Auth Stack** - Login, Register, OTP screens
+
+## 📱 Key Features Implementation
+
+### Network Status Detection
+```typescript
+// Automatically detects:
+- No internet connection (shows error screen)
+- Slow connection (3G) - shows warning banner
+```
+
+### Image Upload System
+```typescript
+// Features:
+- Camera & Gallery access
+- Azure blob storage integration
+- Upload progress tracking
+- Background upload support
+```
+
+### Push Notifications
+```typescript
+// Integrated:
+- Firebase Cloud Messaging
+- Notifee for local notifications
+- Custom notification manager
+- iOS & Android permissions
+```
+
+### State Management
+```typescript
+// Zustand stores with:
+- Persistent storage (MMKV)
+- Type-safe actions
+- DevTools integration (Reactotron)
+```
+
+## 🎨 Styling & Theming
+
+- **Responsive Scaling**: Uses `moderateScale()` for device-independent sizing
+- **Custom Fonts**: Outfit font family (Bold, SemiBold, Medium, Regular, Light)
+- **Safe Areas**: Proper handling of notches and system UI
+- **Constants**: Centralized colors, fonts, and sizes
+
+## 🐛 Debugging
+
+### Development Tools
+- **Reactotron**: Enabled in dev mode for state inspection
+- **Console Logs**: Hidden in production via `LogBox.ignoreAllLogs()`
+- **Sentry**: Crash reporting in production builds
+
+### Debug Commands
 ```bash
-FRAMEWORKS="${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}"
-"${FRAMEWORKS}/SquareInAppPaymentsSDK.framework/setup"
+# React Native debugger
+npx expo start --dev-client
+
+# View device logs
+npx react-native log-ios
+npx react-native log-android
 ```
 
-5. Drag it to run after "Embed Frameworks"
+## 📦 Build & Release
 
-### 4. Run the App
-
+### Android
 ```bash
-# iOS
-npx expo prebuild -p ios
-npx expo run:ios
+# Generate release APK
+npm run ar
 
-# Android
-npx expo prebuild -p android
-npx expo run:android
+# Install on connected device
+npm run adb-install
 ```
 
-## 🧪 Testing in Sandbox
-
-Use these test card numbers (any future exp date, any CVV):
-
-- **Visa:** 4111 1111 1111 1111 ✅
-- **Mastercard:** 5105 1051 0510 5100 ✅
-- **Discover:** 6011 0000 0000 0004 ✅
-- **Declined:** 4000 0000 0000 0002 ❌
-
-Tap "📋 View Sandbox Test Cards" button in the app to see all test cards.
-
-## 📱 Features
-
-- ✅ Square In-App Payments SDK integration
-- ✅ Secure card entry with Square's form
-- ✅ Multiple purchase options (features, balance)
-- ✅ Sandbox testing support
-- ✅ TypeScript support
-- ✅ Error handling and user feedback
-- ✅ iOS & Android support
-
-## 📂 Project Structure
-
-```
-square/
-├── config/
-│   └── square.config.ts          # Configuration
-├── services/
-│   └── PaymentService.ts         # Payment logic
-├── screens/
-│   └── PaymentScreen.tsx         # UI
-├── types/
-│   └── react-native-square-in-app-payments.d.ts
-├── ios/                          # iOS native
-├── android/                      # Android native
-└── App.tsx                       # Entry point
-```
-
-## 📖 Full Documentation
-
-See [SQUARE_SETUP.md](./SQUARE_SETUP.md) for:
-- Complete setup instructions
-- iOS & Android configuration details
-- Troubleshooting guide
-- Production deployment steps
-- Backend integration guide
-- Advanced features (Apple Pay, Google Pay)
-
-## ⚠️ Important Notes
-
-### Security
-- **Never** commit your Production Application ID to version control
-- Use Sandbox mode for all testing
-- Process payments on your backend server in production
-
-### Backend Integration Required
-The current implementation uses **mock payment processing**. For production:
-
-1. Create a backend server
-2. Send card nonces to your backend
-3. Process payments using Square's Payments API
-4. Return results to the app
-
-See `services/PaymentService.ts` comments for details.
-
-## 🐛 Troubleshooting
-
-### "Application ID not configured"
-- Update `config/square.config.ts` with your Square Application ID
-- Restart the app
-
-### iOS build fails
+### iOS
 ```bash
-cd ios
-pod install
-cd ..
-npx expo run:ios
+# Archive in Xcode
+1. Open ios/ClubYakka.xcworkspace in Xcode
+2. Product > Archive
+3. Distribute App
 ```
 
-### Android build fails
-- Ensure minSdkVersion is 24 or higher in `android/build.gradle`
-- Sync Gradle files in Android Studio
+## 🔧 Configuration Files
 
-## 📚 Resources
+### Important Files to Customize
+- `app.json` - App name, bundle ID, permissions
+- `src/constants/Constants.ts` - API URLs, keys
+- `src/config/` - Environment-specific configs
+- `FirebaseFiles/` - Firebase credentials
 
-- [Square Developer Portal](https://developer.squareup.com/)
-- [In-App Payments SDK Docs](https://developer.squareup.com/docs/in-app-payments-sdk/overview)
-- [React Native Plugin](https://github.com/square/in-app-payments-react-native-plugin)
-- [Payments API](https://developer.squareup.com/docs/payments-api/overview)
+## 📚 Dependencies Highlights
 
-## 🆘 Support
+| Package | Purpose |
+|---------|---------|
+| `@tanstack/react-query` | Server state management |
+| `zustand` | Client state management |
+| `react-native-mmkv` | Fast storage |
+| `@react-navigation/native` | Navigation |
+| `axios` | HTTP client |
+| `@react-native-firebase/*` | Firebase integration |
+| `@microsoft/signalr` | Real-time communication |
+| `react-native-reanimated` | Smooth animations |
+| `@sentry/react-native` | Error tracking |
 
-- [Square Developer Forums](https://developer.squareup.com/forums)
-- [GitHub Issues](https://github.com/square/in-app-payments-react-native-plugin/issues)
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/square-connect)
+## 🤝 Contributing
 
-## 📝 License
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-This project uses Square In-App Payments SDK. Review Square's [Terms of Service](https://squareup.com/legal/general/ua).
+## 📝 Best Practices
+
+- ✅ Use path aliases for imports
+- ✅ Follow TypeScript strict mode
+- ✅ Use custom hooks for reusable logic
+- ✅ Implement proper error boundaries
+- ✅ Handle loading and error states
+- ✅ Use responsive scaling utilities
+- ✅ Test on both iOS and Android
+- ✅ Keep components small and focused
+- ✅ Use constants for repeated values
+- ✅ Document complex logic
+
+## 🔒 Security Notes
+
+- Never commit `.env` files or sensitive credentials
+- Keep Firebase config files secure
+- Use environment variables for API keys
+- Implement proper API authentication
+- Validate user inputs
+- Use HTTPS for all API calls
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🆘 Support & Issues
+
+For issues, questions, or contributions:
+- Create an issue in the repository
+- Contact the maintainers
+- Check existing documentation
 
 ---
 
-**Ready to accept payments? Update your config and start testing! 💳**
+**Built with ❤️ using React Native & Expo**
