@@ -45,7 +45,22 @@
   "files": [
     "bin",
     "lib",
-    "template",
+    "../App.tsx",
+    "../app.json",
+    "../babel.config.js",
+    "../babel-plugin-disable-font-scaling.js",
+    "../index.ts",
+    "../metro.config.js",
+    "../package.json",
+    "../react-native.config.js",
+    "../tsconfig.json",
+    "../ReactotronConfig.js",
+    "../src",
+    "../assets",
+    "../types",
+    "../android",
+    "../ios",
+    "../patches",
     "README.md",
     "LICENSE"
   ]
