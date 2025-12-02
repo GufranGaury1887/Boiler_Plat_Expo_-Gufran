@@ -195,16 +195,13 @@ async function createExpoApp(projectName, options) {
     throw error;
   }
 
-  // Copy template files from current directory (the boilerplate itself)
+  // Copy template files from the bundled template directory
   spinner = ora('Copying template files...').start();
   try {
-    // When installed via npm, the templates are in a 'template' subdirectory
-    // When running locally, templates are at the root
-    let templatePath = path.resolve(__dirname, '../template');
+    const templatePath = path.resolve(__dirname, '../template');
     
     if (!fs.existsSync(templatePath)) {
-      // Fallback to root directory if template directory doesn't exist
-      templatePath = path.resolve(__dirname, '../../');
+      throw new Error('Template files not found. The package may not have been installed correctly.');
     }
     
     copyTemplateFiles(templatePath, projectPath, appName, bundleId);

@@ -1,0 +1,69 @@
+{
+  "expo": {
+    "name": "Club Yakka",
+    "slug": "RN_CLUB_YAKKA",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/app_icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./src/assets/images/SplashLogo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff",
+      "imageWidth": 100
+    },
+    "ios": {
+      "supportsTablet": true,
+      "googleServicesFile": "./FirebaseFiles/GoogleService-Info.plist",
+      "bundleIdentifier": "com.club.yakka",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app needs access to camera to take photos.",
+        "NSPhotoLibraryUsageDescription": "This app needs access to photo library to select images."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "googleServicesFile": "./FirebaseFiles/google-services.json",
+      "package": "com.club.yakka",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.INTERNET",
+        "android.permission.POST_NOTIFICATIONS"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./src/assets/fonts/Outfit-Bold.ttf",
+            "./src/assets/fonts/Outfit-Light.ttf",
+            "./src/assets/fonts/Outfit-Medium.ttf",
+            "./src/assets/fonts/Outfit-Regular.ttf",
+            "./src/assets/fonts/Outfit-SemiBold.ttf"
+          ]
+        }
+      ],
+      [
+        "react-native-permissions",
+        {
+          "iosPermissions": [
+            "Camera",
+            "PhotoLibrary",
+            "Notifications"
+          ]
+        }
+      ]
+    ]
+  }
+}
