@@ -295,9 +295,10 @@ async function createExpoApp(projectName, options) {
     console.log(chalk.gray(`     npm install\n`));
   }
 
-  console.log(chalk.white(`  ${chalk.bold(options.skipInstall ? '3' : '2')}. Configure Firebase:`));
+  console.log(chalk.white(`  ${chalk.bold('2')}. Configure Firebase:`));
   console.log(chalk.gray(`     - Add your google-services.json to android/app/`));
-  console.log(chalk.gray(`     - Add your GoogleService-Info.plist to ios/ClubYakka/\n`));
+  console.log(chalk.gray(`     - Add your GoogleService-Info.plist to ios/ClubYakka/`));
+  console.log(chalk.gray(`     - Sample Firebase files are in the FirebaseFiles/ directory\n`));
 
   console.log(chalk.white(`  ${chalk.bold(options.skipInstall ? '4' : '3')}. Install iOS dependencies:`));
   console.log(chalk.gray(`     cd ios && pod install && cd ..\n`));
