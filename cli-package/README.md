@@ -317,7 +317,6 @@ Create `.env` file in root:
 ```env
 API_BASE_URL=https://api.yourapp.com
 AZURE_STORAGE_URL=your-azure-url
-SQUARE_APPLICATION_ID=your-square-id
 ```
 
 ---
@@ -404,7 +403,7 @@ Give a ⭐️ if this project helped you!
 
 ## 📮 Support
 
-For support, email your-email@example.com or open an issue on GitHub.
+For support, email gufrangaury@gmail.com or open an issue on GitHub.
 
 ---
 
