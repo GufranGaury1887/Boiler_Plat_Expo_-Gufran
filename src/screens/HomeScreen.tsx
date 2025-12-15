@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { View, Text, StyleSheet, FlatList, StatusBar, Platform, TouchableOpacity, Image, RefreshControl, ActivityIndicator, Modal, Animated, Dimensions, PanResponder, Alert } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, StyleSheet, FlatList, StatusBar, Platform, TouchableOpacity, Image, RefreshControl, ActivityIndicator, Alert } from 'react-native';
 import { useQueryClient } from '@tanstack/react-query';
 import { useFocusEffect } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -11,64 +11,19 @@ import { Fonts } from '@constants/Fonts';
 import { useAuthStore } from '@stores/authStore';
 import { getApiErrorInfo, useLogout } from '@services/authService';
 import { Button, ClubCard } from '@components/common';
-import { mainService, useInfiniteMyClubs } from '@services/mainServices';
+import { useInfiniteMyClubs } from '@services/mainServices';
 import ToastManager from '@components/common/ToastManager';
 import SVG from '@assets/icons';
 
-type MemberListItemProps = {
-  item: any;
-  isSelected: boolean;
-  onSelect: (member: any) => void;
-};
 
-
-const MemberListItem: React.FC<MemberListItemProps> = ({ item, isSelected, onSelect }) => {
-  const [memberImageError, setMemberImageError] = useState(false);
-  return (
-    <TouchableOpacity style={styles.memberListItem} onPress={() => onSelect(item)}>
-      {item?.profileImage && !memberImageError ? (
-        <Image
-          source={{ uri: item?.profileImage }}
-          onError={() => {
-            setMemberImageError(true);
-          }}
-          style={styles.profileImage}
-        />
-      ) : (
-        <SVG.emptyUser style={{ marginRight: moderateScale(10) }} width={moderateScale(50)} height={moderateScale(50)} />
-      )}
-      <View style={styles.memberNameContainer}>
-        <Text style={styles.memberName}>{item?.name}</Text>
-        {item?.isOwner && (
-          <Text style={styles.memberNameSubtitle}>Yourself</Text>
-        )}
-      </View>
-      <View>
-        {isSelected ? (
-          <SVG.checkRadio width={moderateScale(20)} height={moderateScale(20)} />
-        ) : (
-          <SVG.uncheckRadio width={moderateScale(20)} height={moderateScale(20)} />
-        )}
-      </View>
-    </TouchableOpacity>
-  );
-};
 
 export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const user = useAuthStore((state) => state.user);
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [membersModal, setMembersModal] = useState<boolean>(false);
-  const [selectedMember, setSelectedMember] = useState<any>(null);
-  const [members, setMembers] = useState<any[]>([]);
-  const translateY = useRef(new Animated.Value(0)).current;
-  const screenHeight = Dimensions.get('window').height;
-  const bottomSheetHeight = screenHeight * 0.45; // 45% of screen height
   const PAGE_SIZE = 10;
   const queryClient = useQueryClient();
-  const [selectedClub, setSelectedClub] = useState<any>(null);
   const logout = useAuthStore((state) => state.logout);
-  const [joinClubMemberImageUrls, setJoinClubMemberImageUrls] = useState<Record<number, string>>({});
   const [listError, setListError] = useState<string | null>(null);
 
 
@@ -250,104 +205,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   };
 
 
-
-
-  const handleMemberSelection = (member: any) => {
-    setSelectedMember(member);
-    console.log('Selected member:', member);
-  };
-
-  // Bottom sheet animation functions
-  const showBottomSheet = () => {
-    setMembersModal(true);
-    Animated.spring(translateY, {
-      toValue: 0,
-      useNativeDriver: true,
-      tension: 100,
-      friction: 8,
-    }).start();
-  };
-
-  const hideBottomSheet = () => {
-    Animated.timing(translateY, {
-      toValue: bottomSheetHeight,
-      duration: 300,
-      useNativeDriver: true,
-    }).start(() => {
-      setMembersModal(false);
-      translateY.setValue(bottomSheetHeight);
-    });
-  };
-
-  // PanResponder for swipe gestures
-  const panResponder = useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: (_, gestureState) => {
-        return Math.abs(gestureState.dy) > 5;
-      },
-      onPanResponderGrant: () => {
-        translateY.setOffset((translateY as any)._value);
-        translateY.setValue(0);
-      },
-      onPanResponderMove: (_, gestureState) => {
-        // Only allow downward movement
-        if (gestureState.dy > 0) {
-          translateY.setValue(gestureState.dy);
-        }
-      },
-      onPanResponderRelease: (_, gestureState) => {
-        translateY.flattenOffset();
-
-        // If swiped down more than 100px or with high velocity, close the modal
-        if (gestureState.dy > 100 || gestureState.vy > 0.5) {
-          hideBottomSheet();
-        } else {
-          // Snap back to original position
-          Animated.spring(translateY, {
-            toValue: 0,
-            useNativeDriver: true,
-            tension: 100,
-            friction: 8,
-          }).start();
-        }
-      },
-    })
-  ).current;
-
-  const renderMemberListItem = ({ item }: { item: any }) => (
-    <MemberListItem
-      item={item}
-      isSelected={selectedMember?.id === item?.id}
-      onSelect={handleMemberSelection}
-    />
-  );
-
-
   const renderClubItem = ({ item }: any) => {
     return (
       <ClubCard
         club={item}
         onPress={async () => {
-          const response = await mainService.getClubMembers({ clubId: item?.id });
-          const members = response.data.data;
-          const sortedMembers = members.sort((a: any, b: any) => {
-            if (a?.isOwner) return -1;
-            if (b?.isOwner) return 1;
-            return 0;
-          });
-          setSelectedClub(item);
-          setMembers(sortedMembers.map((member: any) => ({
-            ...member,
-            profileImageUrl: joinClubMemberImageUrls[member?.id] || undefined
-          })));
-
-          if (sortedMembers.length === 1) {
-            setSelectedMember(sortedMembers[0]);
-            navigation.navigate('ClubDetails', { ...item, selectedMember: sortedMembers[0] });
-          } else {
-            setSelectedMember(null);
-            showBottomSheet();
-          }
         }}
       />
     );
@@ -428,80 +290,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         />
       </View>
 
-
-      <Modal
-        visible={membersModal}
-        animationType="fade"
-        transparent={true}
-        onRequestClose={hideBottomSheet}
-      >
-        <View style={styles.modalOverlay}>
-          <TouchableOpacity
-            style={styles.modalBackdrop}
-            activeOpacity={1}
-            onPress={hideBottomSheet}
-          />
-          <Animated.View
-            style={[
-              styles.modalContainer,
-              {
-                transform: [{ translateY }],
-              },
-            ]}
-
-          >
-            <View style={styles.dragHandle} {...panResponder.panHandlers} />
-            <FlatList
-              data={members}
-              renderItem={renderMemberListItem}
-              style={styles.membersList}
-              showsVerticalScrollIndicator={false}
-              ListHeaderComponent={() => {
-                return (
-                  <View>
-                    <View style={styles.headerContainer}>
-                      <Text style={styles.mamberHeaderTitle}>Continue as</Text>
-                    </View>
-                  </View>
-                )
-              }}
-
-              keyExtractor={(item, index) => {
-                // Create a more robust key for members
-                const id = item?.id?.toString() || '';
-                const name = item?.name || '';
-                const email = item?.email || '';
-                const memberCode = item?.membershipCode || '';
-                const createdAt = item?.createdAt || '';
-                // Create a unique composite key using multiple attributes
-                const keyParts = [id, name, email, memberCode, createdAt].filter(part => part && part.toString().trim() !== '');
-
-                if (keyParts.length > 0) {
-                  return `member-${keyParts.join('-')}`;
-                }
-                // Ultimate fallback with index to ensure uniqueness
-                return `member-unknown-${index}`;
-              }}
-
-            />
-
-            <Button
-              title="Continue"
-              onPress={() => {
-                navigation.navigate('ClubDetails', {
-                  ...selectedClub,
-                  selectedMember: selectedMember
-                });
-                hideBottomSheet();
-              }}
-              variant="primary"
-              size="medium"
-              style={styles.nextButton}
-              disabled={!selectedMember}
-            />
-          </Animated.View>
-        </View>
-      </Modal>
     </View>
   );
 };

@@ -7,21 +7,21 @@ import {
   StatusBar,
   Platform,
 } from 'react-native';
-import { Button, TextInput } from '../../components/common';
-import { theme } from '../../constants';
-import { Strings } from '../../constants/strings';
-import { validateEmail, validatePassword } from '../../utils';
-import SVG from '../../assets/icons';
-import Images from '../../assets/images';
+import { Button, TextInput } from '@components/common';
+import { theme } from '@constants';
+import { Strings } from '@constants/strings';
+import { validateEmail, validatePassword } from '@utils';
+import SVG from '@assets/icons';
+import Images from '@assets/images';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { moderateScale, verticalScale } from '../../utils/scaling';
-import { Fonts } from '../../constants/Fonts';
+import { moderateScale, verticalScale } from '@utils/scaling';
+import { Fonts } from '@constants/Fonts';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { hideLoader, showLoader } from '../../components/common/AppLoader';
-import ToastManager from '../../components/common/ToastManager';
-import { useLogin, getApiErrorInfo } from '../../services/authService';
-import { useAuthStore } from '../../stores/authStore';
-import NotificationManager from '../../utils/NotificationManager';
+import { hideLoader, showLoader } from '@components/common/AppLoader';
+import ToastManager from '@components/common/ToastManager';
+import { useLogin, getApiErrorInfo } from '@services/authService';
+import { useAuthStore } from '@stores/authStore';
+import NotificationManager from '@utils/NotificationManager';
 
 interface LoginScreenProps {
   navigation: any;

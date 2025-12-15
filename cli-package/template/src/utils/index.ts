@@ -37,19 +37,19 @@ export const formatDateTime = (date: Date): string => {
 export const formatReminderDateTime = (dateString: string): string => {
   try {
     const date = new Date(dateString);
-    
+
     // Format: "30 May 2025, 3:00 PM"
     const day = date.getDate();
     const month = date.toLocaleString('en-US', { month: 'short' });
     const year = date.getFullYear();
     const hours = date.getHours();
     const minutes = date.getMinutes();
-    
+
     // Convert to 12-hour format
     const period = hours >= 12 ? 'PM' : 'AM';
     const displayHours = hours % 12 || 12;
     const displayMinutes = minutes.toString().padStart(2, '0');
-    
+
     return `${day} ${month} ${year}, ${displayHours}:${displayMinutes} ${period}`;
   } catch (error) {
     console.error('Error formatting reminder date:', error);
@@ -74,13 +74,13 @@ export const isAndroid = (): boolean => {
 // API utilities
 export const createQueryString = (params: Record<string, any>): string => {
   const searchParams = new URLSearchParams();
-  
+
   Object.entries(params).forEach(([key, value]) => {
     if (value !== null && value !== undefined && value !== '') {
       searchParams.append(key, String(value));
     }
   });
-  
+
   return searchParams.toString();
 };
 
@@ -105,7 +105,4 @@ export * from './UploadDebugUtil';
 
 // Re-export AzureUploaderService
 export * from './AzureUploaderService';
-
-// Re-export ClubSearchManager
-export * from './ClubSearchManager';
 

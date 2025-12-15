@@ -1,17 +1,16 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AuthStackParamList } from '../types';
-import { LoginScreen, RegisterScreen, ForgotPasswordScreen, OTPVerifyScreen, WelcomeScreen } from '../screens/auth';
-import { theme } from '../constants';
-import { StorageService } from '../utils/storage';
-import SuccessScreen from '../screens/auth/SuccessScreen';
+import { LoginScreen, WelcomeScreen } from '../screens/auth';
+import { theme } from '@constants';
+import { StorageService } from '@utils/storage';
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
 
 export const AuthStack: React.FC = () => {
   // Check if welcome screen has been shown before
   const hasWelcomeScreenBeenShown = StorageService.preferences.getWelcomeScreenShown();
-  
+
   // Set initial route based on whether welcome screen has been shown
   const initialRouteName = hasWelcomeScreenBeenShown ? 'Login' : 'Welcome';
 
@@ -37,30 +36,12 @@ export const AuthStack: React.FC = () => {
       <Stack.Screen
         name="Welcome"
         component={WelcomeScreen}
-       
+
       />
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-       
-      />
-      <Stack.Screen
-        name="Register"
-        component={RegisterScreen}
-       
-      />
-      <Stack.Screen
-        name="ForgotPassword"
-        component={ForgotPasswordScreen}
-       
-      />
-      <Stack.Screen
-        name="OTPVerify"
-        component={OTPVerifyScreen}
-      />
-      <Stack.Screen
-        name="Success"
-        component={SuccessScreen}
+
       />
     </Stack.Navigator>
   );

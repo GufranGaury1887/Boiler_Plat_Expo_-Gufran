@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { MMKV } from 'react-native-mmkv';
-import { StorageService } from '../utils/storage';
+import { StorageService } from '@utils/storage';
 import { Platform } from 'react-native';
-import ToastManager from '../components/common/ToastManager';
-import { useAuthStore } from '../stores/authStore';
+import ToastManager from '@components/common/ToastManager';
+import { useAuthStore } from '@stores/authStore';
 
 // API Configuration
-export const API_BASE_URL = `${process.env.EXPO_PUBLIC_API_BASE_URL}/api/v1/`; // prod api url
-export const CHAT_HUB_URL = `${process.env.EXPO_PUBLIC_API_BASE_URL}/chathub`; // dev chat hub url
+export const API_BASE_URL = "https://clubyakkadev.24livehost.com/api/v1/"; // prod api url
+export const CHAT_HUB_URL = "https://clubyakkadev.24livehost.com/chathub"; // dev chat hub url
 
 // Create axios instance with default config
 const offsetTime = new Date().getTimezoneOffset() * 60 * -1;
