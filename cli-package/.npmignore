@@ -1,19 +1,36 @@
-# Only include essential files in npm package
-
-# Exclude everything by default
-*
-
-# Include specific files and directories
-!bin/
-!bin/**
-!lib/
-!lib/**
-!README.md
-!LICENSE
-!package.json
-!index.js
-
-# Exclude from included directories
+# Development files
+node_modules/
 *.log
 *.test.js
 *.spec.js
+.DS_Store
+
+# Build artifacts
+*.tgz
+
+# Git
+.git/
+.gitignore
+
+# Development docs (keep only README.md)
+CONTRIBUTING.md
+CHANGELOG.md
+
+# Lock files
+package-lock.json
+yarn.lock
+
+# Template build artifacts
+template/node_modules/
+template/.expo/
+template/dist/
+template/android/build/
+template/android/.gradle/
+template/android/.idea/
+template/android/.kotlin/
+template/android/app/build/
+template/android/app/.cxx/
+template/ios/build/
+template/ios/Pods/
+template/ios/*.xcworkspace/xcuserdata/
+template/ios/*.xcodeproj/xcuserdata/
