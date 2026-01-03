@@ -6,9 +6,7 @@ import ToastManager from '@components/common/ToastManager';
 import { useAuthStore } from '@stores/authStore';
 
 // API Configuration
-export const API_BASE_URL = "https://clubyakkadev.24livehost.com/api/v1/"; // prod api url
-export const CHAT_HUB_URL = "https://clubyakkadev.24livehost.com/chathub"; // dev chat hub url
-
+export const API_BASE_URL = "https://dummyjson.com/"; // prod api url
 // Create axios instance with default config
 const offsetTime = new Date().getTimezoneOffset() * 60 * -1;
 
@@ -106,7 +104,8 @@ const clearAuthTokens = (): void => {
 // API Endpoints
 export const API_ENDPOINTS = {
   AUTH: {
-    LOGIN: 'Account/Login',
+    LOGIN: 'auth/Login',
+    PRODUCT: 'products',
     REGISTER: 'Account/SignUp',
     FORGOT_PASSWORD: 'Account/ForgetPassword',
     REFRESH_TOKEN: 'auth/refresh-token',

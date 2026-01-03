@@ -1,60 +1,66 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Switch, Alert } from 'react-native';
-import { SafeAreaWrapper, Button, Icon, IconButton } from '../components/common';
-import { IconAlt } from '../components/common/IconAlt';
-import { SettingsScreenProps } from '../types';
-import { theme } from '../constants';
-import { useAuthStore } from '../stores/authStore';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Switch,
+  Alert,
+} from "react-native";
+import {
+  SafeAreaWrapper,
+  Button,
+  Icon,
+  IconButton,
+} from "../components/common";
+import { IconAlt } from "../components/common/IconAlt";
+import { SettingsScreenProps } from "../types";
+import { theme } from "../constants";
+import { useAuthStore } from "../stores/authStore";
 
-export const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
+export const SettingsScreen: React.FC<SettingsScreenProps> = ({
+  navigation,
+}) => {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [darkModeEnabled, setDarkModeEnabled] = useState(false);
   const [locationEnabled, setLocationEnabled] = useState(false);
 
   const logout = useAuthStore((state) => state.logout);
   const handleLogout = () => {
-    Alert.alert(
-      'Logout',
-      'Are you sure you want to logout?',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
+    Alert.alert("Logout", "Are you sure you want to logout?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Logout",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            logout();
+          } catch (error) {
+            Alert.alert("Error", "Failed to logout. Please try again.");
+          }
         },
-        {
-          text: 'Logout',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              logout();
-            } catch (error) {
-              Alert.alert('Error', 'Failed to logout. Please try again.');
-            }
-          },
-        },
-      ]
-    );
+      },
+    ]);
   };
 
   const handleClearCache = () => {
-    Alert.alert(
-      'Clear Cache',
-      'This will clear all cached data. Continue?',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
+    Alert.alert("Clear Cache", "This will clear all cached data. Continue?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Clear",
+        style: "destructive",
+        onPress: () => {
+          console.log("Cache cleared");
+          Alert.alert("Success", "Cache cleared successfully!");
         },
-        {
-          text: 'Clear',
-          style: 'destructive',
-          onPress: () => {
-            console.log('Cache cleared');
-            Alert.alert('Success', 'Cache cleared successfully!');
-          },
-        },
-      ]
-    );
+      },
+    ]);
   };
 
   const goBack = () => {
@@ -76,7 +82,9 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) =>
         value={value}
         onValueChange={onValueChange}
         trackColor={{ false: theme.colors.border, true: theme.colors.primary }}
-        thumbColor={value ? theme.colors.background : theme.colors.textSecondary}
+        thumbColor={
+          value ? theme.colors.background : theme.colors.textSecondary
+        }
       />
     </View>
   );
@@ -91,21 +99,21 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) =>
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Preferences</Text>
-          
+
           <SettingItem
             title="Push Notifications"
             subtitle="Receive updates and alerts"
             value={notificationsEnabled}
             onValueChange={setNotificationsEnabled}
           />
-          
+
           <SettingItem
             title="Dark Mode"
             subtitle="Switch to dark theme"
             value={darkModeEnabled}
             onValueChange={setDarkModeEnabled}
           />
-          
+
           <SettingItem
             title="Location Services"
             subtitle="Allow location access"
@@ -116,43 +124,43 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) =>
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Account</Text>
-          
+
           <View style={styles.infoItem}>
             <Text style={styles.infoLabel}>Version</Text>
             <Text style={styles.infoValue}>1.0.0</Text>
           </View>
-          
+
           <View style={styles.infoItem}>
             <Text style={styles.infoLabel}>Build</Text>
             <Text style={styles.infoValue}>2024.01.001</Text>
           </View>
         </View>
 
-          <View style={styles.actionSection}>
+        <View style={styles.actionSection}>
+          <Button
+            title="Clear Cache"
+            onPress={handleClearCache}
+            variant="secondary"
+            style={styles.button}
+          />
+
+          <View style={styles.logoutButtonContainer}>
+            <IconAlt name="log-out" size={20} color={theme.colors.error} />
             <Button
-              title="Clear Cache"
-              onPress={handleClearCache}
-              variant="secondary"
-              style={styles.button}
-            />
-            
-            <View style={styles.logoutButtonContainer}>
-              <IconAlt name="log-out" size={20} color={theme.colors.error} />
-              <Button
-                title="Logout"
-                onPress={handleLogout}
-                variant="outline"
-                style={StyleSheet.flatten([styles.button, styles.logoutButton])}
-              />
-            </View>
-            
-            <Button
-              title="Go Back"
-              onPress={goBack}
-              variant="primary"
-              style={styles.button}
+              title="Logout"
+              onPress={handleLogout}
+              variant="outline"
+              style={StyleSheet.flatten([styles.button, styles.logoutButton])}
             />
           </View>
+
+          <Button
+            title="Go Back"
+            onPress={goBack}
+            variant="primary"
+            style={styles.button}
+          />
+        </View>
       </ScrollView>
     </SafeAreaWrapper>
   );
@@ -164,7 +172,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.background,
   },
   header: {
-    alignItems: 'center',
+    alignItems: "center",
     paddingTop: theme.spacing.xl,
     paddingHorizontal: theme.spacing.lg,
     paddingBottom: theme.spacing.lg,
@@ -178,7 +186,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: theme.typography.fontSize.md,
     color: theme.colors.textSecondary,
-    textAlign: 'center',
+    textAlign: "center",
   },
   section: {
     marginHorizontal: theme.spacing.lg,
@@ -191,9 +199,9 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.md,
   },
   settingItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingVertical: theme.spacing.md,
     paddingHorizontal: theme.spacing.md,
     backgroundColor: theme.colors.surface,
@@ -215,9 +223,9 @@ const styles = StyleSheet.create({
     color: theme.colors.textSecondary,
   },
   infoItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingVertical: theme.spacing.md,
     paddingHorizontal: theme.spacing.md,
     backgroundColor: theme.colors.surface,
@@ -242,8 +250,8 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.sm,
   },
   logoutButtonContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: theme.spacing.sm,
   },
   logoutButton: {

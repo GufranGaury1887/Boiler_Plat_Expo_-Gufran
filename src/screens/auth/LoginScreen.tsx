@@ -10,7 +10,7 @@ import {
 import { Button, TextInput } from '@components/common';
 import { theme } from '@constants';
 import { Strings } from '@constants/strings';
-import { validateEmail, validatePassword } from '@utils';
+import { validatePassword } from '@utils';
 import SVG from '@assets/icons';
 import Images from '@assets/images';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -28,8 +28,8 @@ interface LoginScreenProps {
 }
 
 export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('emilys');
+  const [password, setPassword] = useState('emilyspass');
 
   const loginMutation = useLogin();
   const login = useAuthStore((state) => state.login);
@@ -46,9 +46,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   useEffect(() => {
     const getToken = async () => {
       const token = await NotificationManager.getFCMToken();
-
       console.log("FCM token:", token);
-
     }
     getToken();
   }, []);
@@ -56,12 +54,9 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
 
   const validateForm = () => {
     if (!email.trim()) {
-      ToastManager.error('Email is required');
+      ToastManager.error('username is required');
       return false;
-    } else if (!validateEmail(email)) {
-      ToastManager.error('Please enter a valid email address');
-      return false;
-    }
+    } 
 
     if (!password.trim()) {
       ToastManager.error('Password is required');
@@ -78,17 +73,15 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     if (!validateForm()) return;
     showLoader();
     loginMutation.mutate({
-      email,
+      username: email,
       password
     }, {
       onSuccess: (response) => {
-        // Check if it's a 409 status (OTP verification needed)
-        if (response.status === 409) {
-          ToastManager.error(response.data.message || 'OTP verification required');
-          navigation.navigate('OTPVerify', { email: email });
 
 
-        } else {
+        console.log("suss===>>>>",response);
+        
+       
           // Normal login success
           const userData = {
             userId: response?.data?.data?.userId,
@@ -99,18 +92,13 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
             isAddMember: response?.data?.data?.isAddMember || false,
             userType: response?.data?.data?.userType,
           };
-
-          login(userData, response?.data?.data?.accessToken, response?.data?.data?.authorizationToken);
+          login(userData, response?.data?.accessToken, response?.data?.refreshToken);
           ToastManager.success(response.data.message || 'Welcome back!');
-        }
       },
       onError: (error: any) => {
         const errorInfo = getApiErrorInfo(error);
-        if (errorInfo.statusCode === 401) {
-          console.log('Login error===>>>>14', errorInfo);
-        } else {
           ToastManager.error(errorInfo?.message);
-        }
+        
       },
       onSettled: () => {
         hideLoader();
@@ -144,9 +132,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
           contentContainerStyle={styles.container}
           keyboardShouldPersistTaps="handled"
         >
-          <View style={styles.logoSection}>
-            <SVG.login_logo height={moderateScale(150)} width={moderateScale(150)} style={styles.logoIcon} />
-          </View>
+          <View style={styles.logoSection}/>
 
           {/* Login Form */}
           <View style={styles.loginSection}>
@@ -229,7 +215,7 @@ const styles = StyleSheet.create({
   logoSection: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: verticalScale(50)
+    marginTop: verticalScale(180)
   },
   logoIcon: {
     marginBottom: theme.spacing.md,

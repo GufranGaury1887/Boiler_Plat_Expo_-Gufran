@@ -16,6 +16,7 @@ export interface AuthState {
   user: User | null;
   accessToken: string | null;
   authorizationToken: string | null;
+  refreshToken: string | null;
   isAddMember: boolean;
   isAuthenticated: boolean;
   isLoading: boolean;
@@ -26,7 +27,7 @@ export interface AuthActions {
   setAccessToken: (token: string | null) => void;
   setAuthorizationToken: (token: string | null) => void;
   setLoading: (loading: boolean) => void;
-  login: (user: User, accessToken: string, authorizationToken: string) => void;
+  login: (user: User, accessToken: string, refreshToken: string) => void;
   registerVerify: (user: User, accessToken: string, authorizationToken: string) => void;
   logout: () => void;
   clearAuth: () => void;
@@ -41,15 +42,17 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
   // Initial state
   user: null,
   accessToken: null,
+  refreshToken: null,
   authorizationToken: null,
+  refreshToken: null,
   isAuthenticated: false,
   isAddMember: false,
   isLoading: false,
-  registerVerify: (user, accessToken, authorizationToken) => {
+  registerVerify: (user, accessToken, refreshToken) => {
     const data = {
       user,
       accessToken,
-      authorizationToken,
+      refreshToken,
       isAddMember: user.isAddMember,
       isAuthenticated: true,
       isLoading: false,

@@ -10,10 +10,8 @@ export interface ApiResponse<T = any> {
 }
 
 export interface LoginRequest {
-  email: string;
+  username: string;
   password: string;
-  device_type?: string;
-  device_id?: string;
 }
 
 export interface LoginResponse {

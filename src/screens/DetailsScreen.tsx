@@ -1,27 +1,31 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
-import { SafeAreaWrapper, Button } from '../components/common';
-import { DetailsScreenProps } from '../types';
-import { theme } from '../constants';
-import { formatDateTime } from '../utils';
+import React from "react";
+import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+import { SafeAreaWrapper, Button } from "../components/common";
+import { DetailsScreenProps } from "../types";
+import { theme } from "../constants";
+import { formatDateTime } from "../utils";
 
-export const DetailsScreen: React.FC<DetailsScreenProps> = ({ route, navigation }) => {
+export const DetailsScreen: React.FC<DetailsScreenProps> = ({
+  route,
+  navigation,
+}) => {
   const { itemId, title } = route.params;
 
   // Mock item data - in a real app, you'd fetch this based on itemId
   const itemData = {
     id: itemId,
-    title: title || 'Sample Item',
-    description: 'This is a detailed description of the item. It contains comprehensive information about the features, specifications, and other relevant details that users might want to know.',
-    image: 'https://via.placeholder.com/300x200/007AFF/FFFFFF?text=Item+Image',
-    category: 'Electronics',
-    price: '$299.99',
+    title: title || "Sample Item",
+    description:
+      "This is a detailed description of the item. It contains comprehensive information about the features, specifications, and other relevant details that users might want to know.",
+    image: "https://via.placeholder.com/300x200/007AFF/FFFFFF?text=Item+Image",
+    category: "Electronics",
+    price: "$299.99",
     rating: 4.5,
     reviews: 128,
     inStock: true,
-    createdAt: new Date('2024-01-10T10:30:00Z'),
-    updatedAt: new Date('2024-01-15T14:45:00Z'),
-    tags: ['Popular', 'Featured', 'New Arrival'],
+    createdAt: new Date("2024-01-10T10:30:00Z"),
+    updatedAt: new Date("2024-01-15T14:45:00Z"),
+    tags: ["Popular", "Featured", "New Arrival"],
   };
 
   const goBack = () => {
@@ -30,12 +34,12 @@ export const DetailsScreen: React.FC<DetailsScreenProps> = ({ route, navigation 
 
   const handlePurchase = () => {
     // Handle purchase logic
-    console.log('Purchase item:', itemId);
+    console.log("Purchase item:", itemId);
   };
 
   const handleAddToCart = () => {
     // Handle add to cart logic
-    console.log('Add to cart:', itemId);
+    console.log("Add to cart:", itemId);
   };
 
   const renderStars = (rating: number) => {
@@ -44,26 +48,26 @@ export const DetailsScreen: React.FC<DetailsScreenProps> = ({ route, navigation 
     const hasHalfStar = rating % 1 !== 0;
 
     for (let i = 0; i < fullStars; i++) {
-      stars.push('⭐');
+      stars.push("⭐");
     }
     if (hasHalfStar) {
-      stars.push('✨');
+      stars.push("✨");
     }
-    return stars.join('');
+    return stars.join("");
   };
 
   return (
     <SafeAreaWrapper>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.imageContainer}>
-          <Image 
-            source={{ uri: itemData.image }} 
+          <Image
+            source={{ uri: itemData.image }}
             style={styles.image}
             resizeMode="cover"
           />
           <View style={styles.statusBadge}>
             <Text style={styles.statusText}>
-              {itemData.inStock ? 'In Stock' : 'Out of Stock'}
+              {itemData.inStock ? "In Stock" : "Out of Stock"}
             </Text>
           </View>
         </View>
@@ -96,25 +100,29 @@ export const DetailsScreen: React.FC<DetailsScreenProps> = ({ route, navigation 
 
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Details</Text>
-            
+
             <View style={styles.detailItem}>
               <Text style={styles.detailLabel}>Item ID</Text>
               <Text style={styles.detailValue}>{itemData.id}</Text>
             </View>
-            
+
             <View style={styles.detailItem}>
               <Text style={styles.detailLabel}>Category</Text>
               <Text style={styles.detailValue}>{itemData.category}</Text>
             </View>
-            
+
             <View style={styles.detailItem}>
               <Text style={styles.detailLabel}>Created</Text>
-              <Text style={styles.detailValue}>{formatDateTime(itemData.createdAt)}</Text>
+              <Text style={styles.detailValue}>
+                {formatDateTime(itemData.createdAt)}
+              </Text>
             </View>
-            
+
             <View style={styles.detailItem}>
               <Text style={styles.detailLabel}>Last Updated</Text>
-              <Text style={styles.detailValue}>{formatDateTime(itemData.updatedAt)}</Text>
+              <Text style={styles.detailValue}>
+                {formatDateTime(itemData.updatedAt)}
+              </Text>
             </View>
           </View>
 
@@ -127,7 +135,7 @@ export const DetailsScreen: React.FC<DetailsScreenProps> = ({ route, navigation 
                   variant="primary"
                   style={styles.button}
                 />
-                
+
                 <Button
                   title="Add to Cart"
                   onPress={handleAddToCart}
@@ -136,7 +144,7 @@ export const DetailsScreen: React.FC<DetailsScreenProps> = ({ route, navigation 
                 />
               </>
             )}
-            
+
             <Button
               title="Go Back"
               onPress={goBack}
@@ -156,16 +164,16 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.background,
   },
   imageContainer: {
-    position: 'relative',
+    position: "relative",
     height: 250,
     backgroundColor: theme.colors.surface,
   },
   image: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
   statusBadge: {
-    position: 'absolute',
+    position: "absolute",
     top: theme.spacing.md,
     right: theme.spacing.md,
     backgroundColor: theme.colors.success,
@@ -182,9 +190,9 @@ const styles = StyleSheet.create({
     padding: theme.spacing.lg,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
     marginBottom: theme.spacing.md,
   },
   title: {
@@ -200,8 +208,8 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
   },
   ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: theme.spacing.md,
   },
   rating: {
@@ -214,8 +222,8 @@ const styles = StyleSheet.create({
     color: theme.colors.textSecondary,
   },
   tagsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
     marginBottom: theme.spacing.lg,
     gap: theme.spacing.sm,
   },
@@ -245,9 +253,9 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   detailItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingVertical: theme.spacing.sm,
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.border,
