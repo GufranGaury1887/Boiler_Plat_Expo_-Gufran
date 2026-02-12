@@ -12,7 +12,8 @@ import * as Sentry from "@sentry/react-native";
 
 import * as SplashScreen from 'expo-splash-screen';
 import Constants from './src/constants/Constants';
-import { LogBox, View, Text, TextInput } from 'react-native';
+import { LogBox, View, Text, TextInput, StatusBar } from 'react-native';
+import { useIsDarkMode } from './src/stores/themeStore';
 import NetInfo from '@react-native-community/netinfo';
 import { SlowInternet } from './src/components/common';
 import { moderateScale } from './src/utils/scaling';
@@ -30,6 +31,7 @@ SplashScreen.preventAutoHideAsync();
 function App() {
   const login = useAuthStore((state) => state.login);
   const setLoading = useAuthStore((state) => state.setLoading);
+  const isDarkMode = useIsDarkMode();
   const [isConnected, setIsConnected] = useState(true);
   const [isSlowConnection, setSlowConnection] = useState(false);
 
@@ -98,6 +100,10 @@ function App() {
       <SafeAreaProvider>
         <QueryProvider>
           <KeyboardProvider>
+            <StatusBar
+              barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+              backgroundColor={isDarkMode ? '#000000' : '#FFFFFF'}
+            />
             <RootNavigator />
             {isSlowConnection && (
               <SlowInternet

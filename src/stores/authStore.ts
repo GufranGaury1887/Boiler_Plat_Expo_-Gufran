@@ -1,23 +1,21 @@
-import { create } from 'zustand';
-import { StorageService } from '../utils/storage';
+import { create } from "zustand";
+import { StorageService } from "../utils/storage";
 
 // Types for authentication
 export interface User {
   userId: number;
   email: string;
   Name: string;
+  lastName: string;
   profileImage?: string;
-  isProfileCompleted: boolean;
-  isAddMember: boolean;
-  userType: number;
+  username?: string;
+  gender?: string;
 }
 
 export interface AuthState {
   user: User | null;
   accessToken: string | null;
-  authorizationToken: string | null;
   refreshToken: string | null;
-  isAddMember: boolean;
   isAuthenticated: boolean;
   isLoading: boolean;
 }
@@ -25,10 +23,9 @@ export interface AuthState {
 export interface AuthActions {
   setUser: (user: User | null) => void;
   setAccessToken: (token: string | null) => void;
-  setAuthorizationToken: (token: string | null) => void;
+  setRefreshToken: (token: string | null) => void;
   setLoading: (loading: boolean) => void;
   login: (user: User, accessToken: string, refreshToken: string) => void;
-  registerVerify: (user: User, accessToken: string, authorizationToken: string) => void;
   logout: () => void;
   clearAuth: () => void;
 }
@@ -37,81 +34,69 @@ export type AuthStore = AuthState & AuthActions;
 
 // Create the auth store
 export const useAuthStore = create<AuthStore>()((set, get) => ({
-
-  
   // Initial state
   user: null,
   accessToken: null,
   refreshToken: null,
-  authorizationToken: null,
-  refreshToken: null,
   isAuthenticated: false,
-  isAddMember: false,
   isLoading: false,
-  registerVerify: (user, accessToken, refreshToken) => {
-    const data = {
-      user,
-      accessToken,
-      refreshToken,
-      isAddMember: user.isAddMember,
-      isAuthenticated: true,
-      isLoading: false,
-    }
-    set(data);
-    
-    // Store tokens in both individual methods and user object
-    StorageService.auth.setAccessToken(accessToken);
-    StorageService.auth.setAuthorizationToken(authorizationToken);
-    StorageService.auth.setUser(data);
-  },
 
   // Actions
   setUser: (user) => {
+    console.log("setUser", user);
     set({ user });
-    // persist user changes (e.g., isAddMember) to MMKV
-    const { accessToken, authorizationToken, isAuthenticated, isLoading } = get();
-    const updatedData = { user, accessToken, authorizationToken, isAuthenticated, isLoading, isAddMember: user?.isAddMember ?? false };
+
+    // Persist user changes to MMKV
+    const { accessToken, refreshToken, isAuthenticated, isLoading } = get();
+    const updatedData = {
+      user,
+      accessToken,
+      refreshToken,
+      isAuthenticated,
+      isLoading,
+    };
     StorageService.auth.setUser(updatedData);
   },
   setAccessToken: (token) => {
     set({ accessToken: token });
-    // Also store token in MMKV for API interceptor
     if (token) {
       StorageService.auth.setAccessToken(token);
     } else {
       StorageService.auth.removeAccessToken();
     }
   },
-  setAuthorizationToken: (token) => {
-    set({ authorizationToken: token });
-    // Also store token in MMKV for API interceptor
+  setRefreshToken: (token) => {
+    set({ refreshToken: token });
     if (token) {
-      StorageService.auth.setAuthorizationToken(token);
+      StorageService.auth.setRefreshToken(token);
     } else {
-      StorageService.auth.removeAuthorizationToken();
+      StorageService.auth.removeRefreshToken();
     }
   },
   setLoading: (isLoading) => set({ isLoading }),
-  
-  login: (user, accessToken, authorizationToken) => {
+
+  login: (user, accessToken, refreshToken) => {
     const data = {
       user,
       accessToken,
-      authorizationToken,
-      isAddMember: user.isAddMember,
+      refreshToken,
       isAuthenticated: true,
       isLoading: false,
-    }
+    };
     set(data);
-    
+
+    console.log("login==>>", data);
+
     try {
-      StorageService.auth.setAccessToken(accessToken);
-      StorageService.auth.setAuthorizationToken(authorizationToken);
-      StorageService.auth.setUser(data);
-      
-  
+      if (accessToken && typeof accessToken === "string") {
+        StorageService.auth.setAccessToken(accessToken);
+      }
+      if (refreshToken && typeof refreshToken === "string") {
+        StorageService.auth.setRefreshToken(refreshToken);
+      }
+      StorageService.auth.setUser(JSON.parse(JSON.stringify(data)));
     } catch (error) {
-      console.error("❌ LOGIN - Error storing tokens:", error);
+      console.error("LOGIN - Error storing tokens:", error);
     }
   },
 
@@ -119,44 +104,43 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
     set({
       user: null,
       accessToken: null,
-      authorizationToken: null,
+      refreshToken: null,
       isAuthenticated: false,
       isLoading: false,
     });
-    // Clear all auth data from MMKV
     StorageService.auth.removeUser();
     StorageService.auth.clearAuthData();
   },
-  
+
   clearAuth: () => {
     set({
       user: null,
       accessToken: null,
-      authorizationToken: null,
+      refreshToken: null,
       isAuthenticated: false,
       isLoading: false,
     });
-    // Clear all auth data from MMKV
     StorageService.auth.clearAuthData();
   },
 }));
 
 // Selectors for better performance
-export const useAuth = () => useAuthStore((state) => ({
-  user: state.user,
-  accessToken: state.accessToken,
-  authorizationToken: state.authorizationToken,
-  isAuthenticated: state.isAuthenticated,
-  isLoading: state.isLoading,
-}));
+export const useAuth = () =>
+  useAuthStore((state) => ({
+    user: state.user,
+    accessToken: state.accessToken,
+    refreshToken: state.refreshToken,
+    isAuthenticated: state.isAuthenticated,
+    isLoading: state.isLoading,
+  }));
 
-export const useAuthActions = () => useAuthStore((state) => ({
-  setUser: state.setUser,
-  setAccessToken: state.setAccessToken,
-  setAuthorizationToken: state.setAuthorizationToken,
-  setLoading: state.setLoading,
-  login: state.login,
-  registerVerify: state.registerVerify,
-  logout: state.logout,
-  clearAuth: state.clearAuth,
-}));
+export const useAuthActions = () =>
+  useAuthStore((state) => ({
+    setUser: state.setUser,
+    setAccessToken: state.setAccessToken,
+    setRefreshToken: state.setRefreshToken,
+    setLoading: state.setLoading,
+    login: state.login,
+    logout: state.logout,
+    clearAuth: state.clearAuth,
+  }));

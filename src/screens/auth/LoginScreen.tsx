@@ -77,23 +77,18 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
       password
     }, {
       onSuccess: (response) => {
-
-
-        console.log("suss===>>>>",response);
-        
-       
           // Normal login success
           const userData = {
-            userId: response?.data?.data?.userId,
-            email: response?.data?.data?.email,
-            Name: response?.data?.data?.Name,
-            profileImage: response?.data?.data?.profileImage,
-            isProfileCompleted: response?.data?.data?.isProfileCompleted,
-            isAddMember: response?.data?.data?.isAddMember || false,
-            userType: response?.data?.data?.userType,
+            userId: response?.data?.id,
+            email: response?.data?.email,
+            Name: response?.data?.firstName,
+            lastName: response?.data?.lastName,
+            profileImage: response?.data?.image,
+            username: response?.data?.username,
+            gender: response?.data?.gender,
           };
           login(userData, response?.data?.accessToken, response?.data?.refreshToken);
-          ToastManager.success(response.data.message || 'Welcome back!');
+          ToastManager.success('Welcome back!');
       },
       onError: (error: any) => {
         const errorInfo = getApiErrorInfo(error);

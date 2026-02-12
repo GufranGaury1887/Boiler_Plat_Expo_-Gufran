@@ -71,11 +71,11 @@ export const Icon: React.FC<IconProps> = ({
   const IconComponent = iconMap[name];
 
   // Debug log to see what we're getting
-  if (__DEV__) {
-    console.log('Icon name:', name);
-    console.log('IconComponent:', IconComponent);
-    console.log('typeof IconComponent:', typeof IconComponent);
-  }
+  // if (__DEV__) {
+  //   console.log('Icon name:', name);
+  //   console.log('IconComponent:', IconComponent);
+  //   console.log('typeof IconComponent:', typeof IconComponent);
+  // }
 
   if (!IconComponent || typeof IconComponent !== 'function') {
     console.warn(`Icon "${name}" not found or invalid, using fallback`);

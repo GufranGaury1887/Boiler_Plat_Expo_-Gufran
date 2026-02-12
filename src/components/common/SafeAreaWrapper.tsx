@@ -1,6 +1,7 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet, ViewStyle } from 'react-native';
-import { theme } from '../../constants';
+import React from "react";
+import { StyleSheet, ViewStyle } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useTheme } from "../../stores/themeStore";
 
 interface SafeAreaWrapperProps {
   children: React.ReactNode;
@@ -11,10 +12,15 @@ interface SafeAreaWrapperProps {
 export const SafeAreaWrapper: React.FC<SafeAreaWrapperProps> = ({
   children,
   style,
-  backgroundColor = theme.colors.background,
+  backgroundColor,
 }) => {
+  const theme = useTheme();
+  const bgColor = backgroundColor ?? theme.colors.background;
+
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor }, style]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: bgColor }, style]}
+    >
       {children}
     </SafeAreaView>
   );

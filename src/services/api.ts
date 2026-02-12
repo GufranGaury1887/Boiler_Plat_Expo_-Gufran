@@ -46,13 +46,10 @@ export const apiClient = axios.create({
 // Request interceptor to add auth tokens
 apiClient.interceptors.request.use(
   (config) => {
-    // Add auth tokens if available
+    // Add auth token if available
     const tokens = StorageService.auth.getTokens();
     if (tokens.accessToken) {
-      config.headers.AccessToken = tokens.accessToken;
-    }
-    if (tokens.authorizationToken) {
-      config.headers.Authorization = "Bearer " + tokens.authorizationToken;
+      config.headers.Authorization = 'Bearer ' + tokens.accessToken;
     }
 
     // Add FCM DeviceToken header if available

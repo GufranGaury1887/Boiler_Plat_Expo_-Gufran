@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   View,
   Text,
@@ -14,16 +14,22 @@ import {
   IconButton,
 } from "../components/common";
 import { IconAlt } from "../components/common/IconAlt";
-import { SettingsScreenProps } from "../types";
-import { theme } from "../constants";
+import { SettingsScreenProps, Theme } from "../types";
+import { useThemeStore, useTheme } from "../stores/themeStore";
 import { useAuthStore } from "../stores/authStore";
 
 export const SettingsScreen: React.FC<SettingsScreenProps> = ({
   navigation,
 }) => {
+  const user = useAuthStore((state) => state.user);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  const [darkModeEnabled, setDarkModeEnabled] = useState(false);
   const [locationEnabled, setLocationEnabled] = useState(false);
+
+  const theme = useTheme();
+  const isDarkMode = useThemeStore((s) => s.isDarkMode);
+  const setDarkMode = useThemeStore((s) => s.setDarkMode);
+
+  const styles = useMemo(() => createStyles(theme), [theme]);
 
   const logout = useAuthStore((state) => state.logout);
   const handleLogout = () => {
@@ -61,10 +67,6 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
         },
       },
     ]);
-  };
-
-  const goBack = () => {
-    navigation.goBack();
   };
 
   const SettingItem: React.FC<{
@@ -110,8 +112,8 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
           <SettingItem
             title="Dark Mode"
             subtitle="Switch to dark theme"
-            value={darkModeEnabled}
-            onValueChange={setDarkModeEnabled}
+            value={isDarkMode}
+            onValueChange={setDarkMode}
           />
 
           <SettingItem
@@ -153,109 +155,103 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
               style={StyleSheet.flatten([styles.button, styles.logoutButton])}
             />
           </View>
-
-          <Button
-            title="Go Back"
-            onPress={goBack}
-            variant="primary"
-            style={styles.button}
-          />
         </View>
       </ScrollView>
     </SafeAreaWrapper>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  header: {
-    alignItems: "center",
-    paddingTop: theme.spacing.xl,
-    paddingHorizontal: theme.spacing.lg,
-    paddingBottom: theme.spacing.lg,
-  },
-  title: {
-    fontSize: theme.typography.fontSize.xxl,
-    fontWeight: theme.typography.fontWeight.bold,
-    color: theme.colors.text,
-    marginBottom: theme.spacing.xs,
-  },
-  subtitle: {
-    fontSize: theme.typography.fontSize.md,
-    color: theme.colors.textSecondary,
-    textAlign: "center",
-  },
-  section: {
-    marginHorizontal: theme.spacing.lg,
-    marginBottom: theme.spacing.lg,
-  },
-  sectionTitle: {
-    fontSize: theme.typography.fontSize.lg,
-    fontWeight: theme.typography.fontWeight.semibold,
-    color: theme.colors.text,
-    marginBottom: theme.spacing.md,
-  },
-  settingItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingVertical: theme.spacing.md,
-    paddingHorizontal: theme.spacing.md,
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.borderRadius.md,
-    marginBottom: theme.spacing.sm,
-  },
-  settingTextContainer: {
-    flex: 1,
-    marginRight: theme.spacing.md,
-  },
-  settingTitle: {
-    fontSize: theme.typography.fontSize.md,
-    fontWeight: theme.typography.fontWeight.medium,
-    color: theme.colors.text,
-    marginBottom: theme.spacing.xs,
-  },
-  settingSubtitle: {
-    fontSize: theme.typography.fontSize.sm,
-    color: theme.colors.textSecondary,
-  },
-  infoItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingVertical: theme.spacing.md,
-    paddingHorizontal: theme.spacing.md,
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.borderRadius.md,
-    marginBottom: theme.spacing.sm,
-  },
-  infoLabel: {
-    fontSize: theme.typography.fontSize.md,
-    color: theme.colors.textSecondary,
-  },
-  infoValue: {
-    fontSize: theme.typography.fontSize.md,
-    color: theme.colors.text,
-    fontWeight: theme.typography.fontWeight.medium,
-  },
-  actionSection: {
-    paddingHorizontal: theme.spacing.lg,
-    paddingBottom: theme.spacing.xl,
-    gap: theme.spacing.md,
-  },
-  button: {
-    marginBottom: theme.spacing.sm,
-  },
-  logoutButtonContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: theme.spacing.sm,
-  },
-  logoutButton: {
-    borderColor: theme.colors.error,
-    flex: 1,
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    header: {
+      alignItems: "center",
+      paddingTop: theme.spacing.xl,
+      paddingHorizontal: theme.spacing.lg,
+      paddingBottom: theme.spacing.lg,
+    },
+    title: {
+      fontSize: theme.typography.fontSize.xxl,
+      fontWeight: theme.typography.fontWeight.bold,
+      color: theme.colors.text,
+      marginBottom: theme.spacing.xs,
+    },
+    subtitle: {
+      fontSize: theme.typography.fontSize.md,
+      color: theme.colors.textSecondary,
+      textAlign: "center",
+    },
+    section: {
+      marginHorizontal: theme.spacing.lg,
+      marginBottom: theme.spacing.lg,
+    },
+    sectionTitle: {
+      fontSize: theme.typography.fontSize.lg,
+      fontWeight: theme.typography.fontWeight.semibold,
+      color: theme.colors.text,
+      marginBottom: theme.spacing.md,
+    },
+    settingItem: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingVertical: theme.spacing.md,
+      paddingHorizontal: theme.spacing.md,
+      backgroundColor: theme.colors.surface,
+      borderRadius: theme.borderRadius.md,
+      marginBottom: theme.spacing.sm,
+    },
+    settingTextContainer: {
+      flex: 1,
+      marginRight: theme.spacing.md,
+    },
+    settingTitle: {
+      fontSize: theme.typography.fontSize.md,
+      fontWeight: theme.typography.fontWeight.medium,
+      color: theme.colors.text,
+      marginBottom: theme.spacing.xs,
+    },
+    settingSubtitle: {
+      fontSize: theme.typography.fontSize.sm,
+      color: theme.colors.textSecondary,
+    },
+    infoItem: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingVertical: theme.spacing.md,
+      paddingHorizontal: theme.spacing.md,
+      backgroundColor: theme.colors.surface,
+      borderRadius: theme.borderRadius.md,
+      marginBottom: theme.spacing.sm,
+    },
+    infoLabel: {
+      fontSize: theme.typography.fontSize.md,
+      color: theme.colors.textSecondary,
+    },
+    infoValue: {
+      fontSize: theme.typography.fontSize.md,
+      color: theme.colors.text,
+      fontWeight: theme.typography.fontWeight.medium,
+    },
+    actionSection: {
+      paddingHorizontal: theme.spacing.lg,
+      paddingBottom: theme.spacing.xl,
+      gap: theme.spacing.md,
+    },
+    button: {
+      marginBottom: theme.spacing.sm,
+    },
+    logoutButtonContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: theme.spacing.sm,
+    },
+    logoutButton: {
+      borderColor: theme.colors.error,
+      flex: 1,
+    },
+  });

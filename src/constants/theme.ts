@@ -61,11 +61,23 @@ export const darkTheme: Theme = {
   ...lightTheme,
   colors: {
     ...lightTheme.colors,
+    primary: '#0A84FF',
+    secondary: '#5E5CE6',
     background: '#000000',
     surface: '#1C1C1E',
     text: '#FFFFFF',
     textSecondary: '#8E8E93',
     border: '#38383A',
+    success: '#30D158',
+    warning: '#FF9F0A',
+    error: '#FF453A',
+    blue: '#3B82F6',
+    DarkGray: '#B0B0B0',
+    lightLavenderGray: '#1C1C1E',
+    imageBorder: '#2C2C2E',
+    paraText: '#D1D1D6',
+    white: '#FFFFFF',
+    black: '#000000',
   },
 };
 
