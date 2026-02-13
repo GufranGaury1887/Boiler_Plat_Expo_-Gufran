@@ -101,39 +101,38 @@ export const StorageService = {
       return token;
     },
     removeAccessToken: () => secureStorage.removeItem('access_token'),
-    setAuthorizationToken: (token: string) => {
-      secureStorage.setItem('authorization_token', token);
+    setRefreshToken: (token: string) => {
+      secureStorage.setItem('refresh_token', token);
     },
-    getAuthorizationToken: () => {
-      const token = secureStorage.getItem('authorization_token');
+    getRefreshToken: () => {
+      const token = secureStorage.getItem('refresh_token');
       return token;
     },
-    removeAuthorizationToken: () => secureStorage.removeItem('authorization_token'),
+    removeRefreshToken: () => secureStorage.removeItem('refresh_token'),
     
     setUser: (user: any) => secureStorage.setObject('user_data', user),
     getUser: () => secureStorage.getObject('user_data'),
     removeUser: () => secureStorage.removeItem('user_data'),
     
-    setTokens: (accessToken: string, authorizationToken: string) => {
+    setTokens: (accessToken: string, refreshToken: string) => {
       secureStorage.setItem('access_token', accessToken);
-      secureStorage.setItem('authorization_token', authorizationToken);
+      secureStorage.setItem('refresh_token', refreshToken);
     },
     
     getTokens: () => {
       const accessToken = secureStorage.getItem('access_token');
-      const authorizationToken = secureStorage.getItem('authorization_token');
+      const refreshToken = secureStorage.getItem('refresh_token');
       
       return {
         accessToken,
-        authorizationToken,
+        refreshToken,
       };
     },
     
     clearAuthData: () => {
-      console.log("🧹 STORAGE - clearAuthData() called");
       secureStorage.removeItem('user_token');
       secureStorage.removeItem('access_token');
-      secureStorage.removeItem('authorization_token');
+      secureStorage.removeItem('refresh_token');
       secureStorage.removeItem('user_data');
     },
   },

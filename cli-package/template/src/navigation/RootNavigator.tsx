@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { useAuthStore } from '@stores/authStore';
 import { AuthStack } from './AuthStack';
 import { MainStack } from './MainStack';
@@ -7,6 +7,7 @@ import { LoadingSpinner } from '@components/common';
 import * as SplashScreen from 'expo-splash-screen';
 import { navigationRef } from './navigationRef';
 import NotificationManager from '@utils/NotificationManager';
+import { useTheme, useIsDarkMode } from '../stores/themeStore';
 
 // Navigation component that switches between Auth, Middle and Main stacks
 const AppNavigator: React.FC = () => {
@@ -27,6 +28,34 @@ const AppNavigator: React.FC = () => {
 
 // Root Navigator
 export const RootNavigator: React.FC = () => {
+  const appTheme = useTheme();
+  const isDark = useIsDarkMode();
+
+  // Build a React Navigation theme from the app theme
+  const navigationTheme = isDark
+    ? {
+        ...DarkTheme,
+        colors: {
+          ...DarkTheme.colors,
+          primary: appTheme.colors.primary,
+          background: appTheme.colors.background,
+          card: appTheme.colors.surface,
+          text: appTheme.colors.text,
+          border: appTheme.colors.border,
+        },
+      }
+    : {
+        ...DefaultTheme,
+        colors: {
+          ...DefaultTheme.colors,
+          primary: appTheme.colors.primary,
+          background: appTheme.colors.background,
+          card: appTheme.colors.surface,
+          text: appTheme.colors.text,
+          border: appTheme.colors.border,
+        },
+      };
+
   useEffect(() => {
     const initializeFCM = async () => {
       try {
@@ -66,6 +95,7 @@ export const RootNavigator: React.FC = () => {
   return (
     <NavigationContainer
       ref={navigationRef}
+      theme={navigationTheme}
       onReady={() => {
         setTimeout(() => {
           SplashScreen.hide();

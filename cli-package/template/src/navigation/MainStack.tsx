@@ -1,18 +1,18 @@
-import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { MainStackParamList } from '../types';
-import {
-  HomeScreen,
-} from '../screens';
-import { theme } from '../constants/theme';
+import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { MainStackParamList } from "../types";
+import { BottomTabNavigator } from "./BottomTabNavigator";
+import { useTheme } from "../stores/themeStore";
 
 const Stack = createNativeStackNavigator<MainStackParamList>();
 
 export const MainStack: React.FC = () => {
+  const theme = useTheme();
+
   return (
     <Stack.Navigator
       id={undefined}
-      initialRouteName="Home"
+      initialRouteName="BottomTabs"
       screenOptions={{
         headerShown: false,
         headerStyle: {
@@ -23,13 +23,16 @@ export const MainStack: React.FC = () => {
           fontWeight: theme.typography.fontWeight.semibold,
           fontSize: theme.typography.fontSize.lg,
         },
-        headerBackTitle: '',
-        animation: 'fade',
+        headerBackTitle: "",
+        animation: "fade",
         headerShadowVisible: false,
       }}
     >
-      <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Club Yakka', headerLargeTitle: true }} />
-
+      <Stack.Screen
+        name="BottomTabs"
+        component={BottomTabNavigator}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };

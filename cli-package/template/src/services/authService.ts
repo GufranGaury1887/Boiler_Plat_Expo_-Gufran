@@ -10,26 +10,20 @@ export interface ApiResponse<T = any> {
 }
 
 export interface LoginRequest {
-  email: string;
+  username: string;
   password: string;
-  device_type?: string;
-  device_id?: string;
 }
 
 export interface LoginResponse {
-  apiName: string;
-  data: {
-    Name: string;
-    accessToken: string;
-    authorizationToken: string;
-    email: string;
-    isProfileCompleted: boolean;
-    profileImage: string;
-    userId: number;
-    userType: number;
-    isAddMember?: boolean;
-  };
-  message: string;
+  id: number;
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  image: string;
+  accessToken: string;
+  refreshToken: string;
 }
 
 

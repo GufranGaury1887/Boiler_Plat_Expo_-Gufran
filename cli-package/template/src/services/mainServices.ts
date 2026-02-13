@@ -18,7 +18,7 @@ export interface MyClubsRequest {
 export interface MyClubsResponse {
 
   apiName: string;
-  data: any[];
+  products: any[];
   message: string;
   success: boolean;
 }
@@ -32,9 +32,7 @@ export const mainService = {
 
 
   myClubs: async (params: MyClubsRequest): Promise<ApiResponse<MyClubsResponse>> => {
-    const response = await apiClient.get(API_ENDPOINTS.CLUB.SEARCH_MY_CLUBS, {
-      params: params,
-    });
+    const response = await apiClient.get(API_ENDPOINTS.AUTH.PRODUCT);
     return {
       data: response.data,
       status: response.status,
@@ -64,5 +62,17 @@ export const useInfiniteMyClubs = (search: string, pageSize: number) => {
       return currentPage < totalPages - 1 ? currentPage + 1 : undefined;
     },
     initialPageParam: 0,
+  });
+};
+
+// Simple useQuery hook for fetching clubs without pagination
+export const useMyClubs = () => {
+  return useQuery({
+    queryKey: ['myClubs'],
+    queryFn: () => mainService.myClubs({
+      search: '',
+      pageNumber: 0,
+      pageSize: 100
+    }),
   });
 };

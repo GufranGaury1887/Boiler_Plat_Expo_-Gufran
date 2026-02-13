@@ -129,81 +129,16 @@ export class Strings {
     FEATURE_UTILITIES: '✅ Utility Functions',
   };
 
-  // MARK: - Profile Screen Strings
-  static readonly PROFILE = {
-    TITLE: 'Profile',
-    EDIT_PROFILE: 'Edit Profile',
-    LOGOUT: 'Logout',
-    ACCOUNT_SETTINGS: 'Account Settings',
-    PERSONAL_INFO: 'Personal Information',
-    SECURITY: 'Security',
-    NOTIFICATIONS: 'Notifications',
-    PRIVACY: 'Privacy',
-  };
 
-  // MARK: - Settings Screen Strings
-  static readonly SETTINGS = {
-    TITLE: 'Settings',
-    GENERAL: 'General',
-    APPEARANCE: 'Appearance',
-    LANGUAGE: 'Language',
-    ABOUT: 'About',
-    VERSION: 'Version',
-    TERMS_OF_SERVICE: 'Terms of Service',
-    PRIVACY_POLICY: 'Privacy Policy',
-    CONTACT_SUPPORT: 'Contact Support',
-  };
 
-  // MARK: - Details Screen Strings
-  static readonly DETAILS = {
-    TITLE: 'Details',
-    DESCRIPTION: 'Description',
-    MORE_INFO: 'More Information',
-    RELATED_ITEMS: 'Related Items',
-    SHARE: 'Share',
-    BOOKMARK: 'Bookmark',
-  };
 
-  // MARK: - Alert Messages
-  static readonly ALERTS = {
-    CONFIRM_LOGOUT: 'Are you sure you want to logout?',
-    CONFIRM_DELETE: 'Are you sure you want to delete this item?',
-    NETWORK_ERROR: 'Network error. Please check your connection.',
-    SERVER_ERROR: 'Server error. Please try again later.',
-    UNKNOWN_ERROR: 'An unknown error occurred.',
-  };
 
-  // MARK: - Accessibility Strings
-  static readonly ACCESSIBILITY = {
-    LOGIN_BUTTON: 'Login button',
-    SIGNUP_BUTTON: 'Sign up button',
-    EMAIL_INPUT: 'Email input field',
-    PASSWORD_INPUT: 'Password input field',
-    FORGOT_PASSWORD_LINK: 'Forgot password link',
-    MENU_BUTTON: 'Menu button',
-    BACK_BUTTON: 'Back button',
-    CLOSE_BUTTON: 'Close button',
-  };
-  static readonly Teams = {
-    TEAMS: 'Teams',
-    JOIN_TEAM_SUBTITLE: 'Join Team',
-    PENDING_REQUEST: 'Pending Request',
-    MY_TEAMS_SECTION_TITLE: 'MY TEAMS',
-    SEARCH_AND_JOIN_TEAM:'Search and join team to explore the events, matches, and activities and more.',
-    UNIQUE_CODE_AND_CLUB_NAME:'Unique code and club name',
-    SEARCH_BY_TEAM_NAME:'Search by team name'
-  };
-  static readonly Announcements = {
-    ANNOUNCEMENTS: 'Announcements'
-  };
-  static readonly VolunteerOpportunities = {
-    VOLUNTEER_OPPORTUNITIES: 'Volunteer Opportunities',
-    TOTAL_HOURS: "Total Hours",
-    HOURS: " Hours",
-    NEXT_SHIFT: "Next Shift",
-    THIS_MONTH: "This Month",
-    VIEW_MORE_DETAILS: "View Details",
-  };
+  
+
+  
+ 
+
+ 
 
 }
 
