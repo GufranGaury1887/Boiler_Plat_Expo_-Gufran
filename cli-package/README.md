@@ -6,6 +6,21 @@
 
 A CLI tool to create production-ready Expo React Native apps with Firebase, Navigation, TypeScript, and more. Works offline - no git clone needed!
 
+## 📸 App Screenshots
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/GufranGaury1887/Boiler_Plat_Expo_-Gufran/main/appScreenshot/01-Login-screen.png" width="180" alt="Login Screen" />
+  <img src="https://raw.githubusercontent.com/GufranGaury1887/Boiler_Plat_Expo_-Gufran/main/appScreenshot/02-Home-screen.png" width="180" alt="Home Screen" />
+  <img src="https://raw.githubusercontent.com/GufranGaury1887/Boiler_Plat_Expo_-Gufran/main/appScreenshot/04-Setting-screen.png" width="180" alt="Setting Screen" />
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/GufranGaury1887/Boiler_Plat_Expo_-Gufran/main/appScreenshot/05-Dark-home-screen.png" width="180" alt="Dark Home Screen" />
+  <img src="https://raw.githubusercontent.com/GufranGaury1887/Boiler_Plat_Expo_-Gufran/main/appScreenshot/03-Dark-Setting-screen.png" width="180" alt="Dark Setting Screen" />
+  <img src="https://raw.githubusercontent.com/GufranGaury1887/Boiler_Plat_Expo_-Gufran/main/appScreenshot/06-Dark-profile-screen.png" width="180" alt="Dark Profile Screen" />
+  <img src="https://raw.githubusercontent.com/GufranGaury1887/Boiler_Plat_Expo_-Gufran/main/appScreenshot/07-Reactotron.png" width="180" alt="Reactotron" />
+</p>
+
 ## Features
 
 - 🔥 **Firebase Integration** - Authentication, Push Notifications, Analytics

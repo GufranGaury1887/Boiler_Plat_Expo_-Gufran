@@ -1,6 +1,6 @@
 {
   "name": "create-gufran-expo-app",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "🚀 Ultimate Expo React Native Boilerplate - Create production-ready Expo apps instantly with Firebase, Navigation, TypeScript, and more. No git clone needed, works offline!",
   "main": "index.js",
   "bin": {
@@ -46,6 +46,7 @@
     "bin",
     "lib",
     "template",
+    "appScreenshot",
     "index.js",
     "README.md",
     "LICENSE"
